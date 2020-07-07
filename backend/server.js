@@ -14,6 +14,8 @@ const usersRouter = require('./routes/users')
 const questionsRouter = require('./routes/questions')
 const answersRouter = require('./routes/answers')
 
+const authRoute = require('./routes/auth')
+
 //cors middleware
 app.use(cors())
 app.use(express.json()) //since server will send and receive json
@@ -22,9 +24,10 @@ const uri = process.env.ATLAS_URI
 mongoose.connect(uri, {useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology : true})
 const connection = mongoose.connection
 
-app.use('/users' , usersRouter)
-app.use('/questions' , questionsRouter)
-app.use('/answers' , answersRouter)
+app.use('/api/users' , usersRouter)
+app.use('/api/questions' , questionsRouter)
+app.use('/api/answers' , answersRouter)
+app.use('/api/user' , authRoute)
 
 connection.once('open' , () => {
     console.log("connected to mongo")

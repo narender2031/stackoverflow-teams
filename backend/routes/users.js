@@ -1,14 +1,34 @@
 const router = require('express').Router()
 let User = require('../models/userModel')
 
-router.route('/').get((req, res) => {
-    User.find()
-        .then(users => res.json(users))
+//get details of a single user, using their username 
+router.route('/:username').get((req, res) => {
+    User.find({username : req.params.username})
+        .then(user => res.json(user))
         .catch(err => res.status(400).json({ error : err}))
 })
 
-router.route('/add').post((req, res) => {
+//UPDATE user details
+router.route('/update/:userId').post((req, res) => {
+    User.findById(req.params.userId)
+        .then((user) => {
+            user.firstName = req.body.firstName
+            user.lastName = req.body.lastName
+            user.bio = req.body.bio
+            user.title = req.body.title
+            user.location = req.body.location
+
+            user.save()
+                .then(() => res.json(user) )
+                .catch(err => res.status(400).json({ error : err}))
+        })
+        .catch(err => res.status(400).json({ error : err}))
+})
+
+//signup a user
+router.route('/signup').post((req, res) => {
     const username = req.body.username
+    const password = req.body.password
     const firstName = req.body.firstName
     const lastName = req.body.lastName
     const email = req.body.email
@@ -21,7 +41,7 @@ router.route('/add').post((req, res) => {
     const answerCount = 0
     const questionCount = 0
 
-    const newUser = new User({username, firstName, lastName, email, bio, title, location, starCount, likeCount, leaderboardPosition, questionCount, answerCount})
+    const newUser = new User({username, password, firstName, lastName, email, bio, title, location, starCount, likeCount, leaderboardPosition, questionCount, answerCount})
 
     newUser.save()
         .then(() => res.json(newUser))
