@@ -8,7 +8,7 @@ router.route('/').get((req, res) => {
         .catch(err => res.status(400).json({ error : err}))
 })
 
-//POST a answer
+//POST an answer
 router.route('/add').post((req, res) => {
     const username = req.username
     const firstName = req.firstName
@@ -26,7 +26,7 @@ router.route('/add').post((req, res) => {
         .catch(err => res.status(400).json({ error : err}))
 })
 
-//DELETE a answer
+//DELETE an answer
 router.route('/delete/:answerId').delete((req, res) => {
     Answer.findByIdAndDelete(req.params.answerId)
         .then(() => res.json("Answer deleted"))
