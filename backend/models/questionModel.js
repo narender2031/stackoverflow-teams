@@ -19,14 +19,16 @@ const questionSchema = new Schema({
         type : String,
         required : true
     }, 
-    // createdAt : { 
-    //     type : Date,
-    //     required : true
-    // },
+    solvedStatus : { 
+        type : Boolean
+    },
     starCount : {
         type : Number,
     },
     likeCount : {
+        type : Number,
+    },
+    dislikeCount : {
         type : Number,
     },
     answerCount : {

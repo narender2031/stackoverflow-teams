@@ -3,9 +3,10 @@
 # dependencies
 /node_modules
 /backend/node_modules
-/stackoverflow-teams/node_modules
+/react-app/node_modules
 /.pnp
 .pnp.js
+/react-app
 
 # testing
 /coverage

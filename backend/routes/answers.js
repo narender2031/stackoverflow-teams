@@ -10,9 +10,9 @@ router.route('/').get((req, res) => {
 
 //POST a answer
 router.route('/add').post((req, res) => {
-    const username = req.body.username
-    const firstName = req.body.firstName
-    const lastName = req.body.lastName
+    const username = req.username
+    const firstName = req.firstName
+    const lastName = req.lastName
     const answerBody = req.body.answerBody
     const questionId = req.body.questionId
     const starCount = 0

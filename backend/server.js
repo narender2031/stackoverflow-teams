@@ -14,7 +14,7 @@ const usersRouter = require('./routes/users')
 const questionsRouter = require('./routes/questions')
 const answersRouter = require('./routes/answers')
 
-const authRoute = require('./routes/auth')
+const mongoAuth = require('./routes/mongoAuth')
 
 //cors middleware
 app.use(cors())
@@ -25,9 +25,8 @@ mongoose.connect(uri, {useNewUrlParser: true, useCreateIndex: true, useUnifiedTo
 const connection = mongoose.connection
 
 app.use('/api/users' , usersRouter)
-app.use('/api/questions' , questionsRouter)
-app.use('/api/answers' , answersRouter)
-app.use('/api/user' , authRoute)
+app.use('/api/questions' , mongoAuth,  questionsRouter)
+app.use('/api/answers' , mongoAuth, answersRouter)
 
 connection.once('open' , () => {
     console.log("connected to mongo")

@@ -1,4 +1,5 @@
 const router = require('express').Router()
+const jwt = require('jsonwebtoken')
 let User = require('../models/userModel')
 
 //get details of a single user, using their username 
@@ -45,6 +46,23 @@ router.route('/signup').post((req, res) => {
 
     newUser.save()
         .then(() => res.json(newUser))
+        .catch(err => res.status(400).json({ error : err}))
+})
+
+
+//login a user
+router.route('/login').post((req, res) => {
+
+    User.find({username : req.body.username})
+        .then(userArray => {
+            userArray.forEach(user => {
+                if(user.password === req.body.password ){
+                    // create and assign jwt token
+                    const token = jwt.sign({_id : user._id }, process.env.TOKEN_SECRET)
+                    res.header('authorization', token).json(token)
+                }
+            });
+        })
         .catch(err => res.status(400).json({ error : err}))
 })
 
