@@ -30,11 +30,9 @@ const userSchema = new Schema({
     },
     title : {
         type :String,
-        required :true,
     },
     location : {
         type :String,
-        required :true,
     },
     starCount : {
         type : Number,

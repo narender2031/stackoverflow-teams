@@ -33,9 +33,9 @@ router.route('/signup').post((req, res) => {
     const firstName = req.body.firstName
     const lastName = req.body.lastName
     const email = req.body.email
-    const bio = req.body.bio
-    const title = req.body.title
-    const location = req.body.location
+    const bio = ''
+    const title = ''
+    const location = ''
     const starCount = 0
     const likeCount = 0
     const leaderboardPosition = 0
@@ -43,6 +43,7 @@ router.route('/signup').post((req, res) => {
     const questionCount = 0
 
     const newUser = new User({username, password, firstName, lastName, email, bio, title, location, starCount, likeCount, leaderboardPosition, questionCount, answerCount})
+    // const newUser = new User({username, password, firstName, lastName, email})
 
     newUser.save()
         .then(() => res.json(newUser))
