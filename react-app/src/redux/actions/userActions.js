@@ -1,4 +1,4 @@
-import {SET_AUTHENTICATED , LOADING_USER} from '../types'
+import {SET_AUTHENTICATED , LOADING_USER, SET_UNAUTHENTICATED, SET_AUTHENTICATED_USER} from '../types'
 import axios from 'axios'
 
 export const signupUser = (newUser, history) => (dispatch) => {
@@ -44,3 +44,24 @@ const setAuthorizationHeader = (token) => {
     axios.defaults.headers.common['Authorization'] = userToken
 }
 
+export const logoutUser = () => (dispatch) => {
+    localStorage.removeItem('userToken')
+    delete axios.defaults.headers.common['Authorization']
+
+    dispatch({
+        type : SET_UNAUTHENTICATED
+    })
+}
+
+//get the todo items
+export const getAuthenticatedUserData = () => (dispatch) => {
+    axios.get('/user/getAuthenticatedUserData/')
+    .then(res => {
+        console.log(res.data)
+        dispatch({
+            type : SET_AUTHENTICATED_USER,
+            payload : res.data
+        })
+    })
+    .catch(err => console.log(err) )
+}

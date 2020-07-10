@@ -1,5 +1,5 @@
 //user reducer types
-export const SET_USER = 'SET_USER' 
+export const SET_AUTHENTICATED_USER = 'SET_AUTHENTICATED_USER' 
 export const LOADING_USER = 'LOADING_USER' 
 export const SET_AUTHENTICATED = 'SET_AUTHENTICATED' 
 export const SET_UNAUTHENTICATED = 'SET_UNAUTHENTICATED' 
@@ -8,4 +8,5 @@ export const SET_UNAUTHENTICATED = 'SET_UNAUTHENTICATED'
 
 //data reducer types
 export const SET_QUESTIONS = 'SET_QUESTIONS'
+export const SET_ANSWERS = 'SET_ANSWERS'
 export const LOADING_DATA = 'LOADING_DATA'

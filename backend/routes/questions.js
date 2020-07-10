@@ -15,13 +15,14 @@ router.route('/add').post((req, res) => {
     const username = req.username
     const firstName = req.firstName
     const lastName = req.lastName
+    const questionTitle = req.body.questionTitle
     const questionBody = req.body.questionBody
     const solvedStatus = false
     const starCount = 0
     const likeCount = 0
     const answerCount = 0
 
-    const newQuestion = new Question({username, firstName, lastName, questionBody,solvedStatus, starCount, likeCount, answerCount})
+    const newQuestion = new Question({username, firstName, lastName, questionTitle, questionBody,solvedStatus, starCount, likeCount, answerCount})
 
     newQuestion.save()
         .then(() => res.json(newQuestion) )

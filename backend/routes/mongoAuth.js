@@ -18,7 +18,6 @@ module.exports = (req, res, next ) => {
         req.userId = user._id
         req.firstName = user.firstName
         req.lastName = user.lastName
-
         return next()
     })
     .catch(err => {

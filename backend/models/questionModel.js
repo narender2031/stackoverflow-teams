@@ -15,6 +15,10 @@ const questionSchema = new Schema({
         type :String,
         required :true,
     },
+    questionTitle : { 
+        type : String,
+        required : true
+    },
     questionBody : { 
         type : String,
         required : true

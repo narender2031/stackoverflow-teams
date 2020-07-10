@@ -11,6 +11,7 @@ const app = express()
 const port = process.env.PORT || 5000
 
 const usersRouter = require('./routes/users')
+const authUsersRouter = require('./routes/authUsers')
 const questionsRouter = require('./routes/questions')
 const answersRouter = require('./routes/answers')
 
@@ -25,6 +26,7 @@ mongoose.connect(uri, {useNewUrlParser: true, useCreateIndex: true, useUnifiedTo
 const connection = mongoose.connection
 
 app.use('/api/users' , usersRouter)
+app.use('/api/user' , mongoAuth, authUsersRouter)
 app.use('/api/questions' , mongoAuth,  questionsRouter)
 app.use('/api/answers' , mongoAuth, answersRouter)
 

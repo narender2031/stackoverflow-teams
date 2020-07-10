@@ -1,11 +1,8 @@
-import {SET_QUESTIONS} from '../types'
+import {SET_QUESTIONS, SET_ANSWERS} from '../types'
 import axios from 'axios'
 
-//get the todo items
+//get all the questions posted 
 export const getQuestions = () => (dispatch) => {
-//    dispatch({
-//        type : LOADING_DATA
-//    })
    axios.get('/questions')
    .then(res => {
        dispatch({
@@ -15,3 +12,15 @@ export const getQuestions = () => (dispatch) => {
    })
    .catch(err => console.log(err) )
 }
+
+//get all the questions posted 
+export const getAnswers = () => (dispatch) => {
+    axios.get('/answers')
+    .then(res => {
+        dispatch({
+            type : SET_ANSWERS,
+            payload : res.data
+        })
+    })
+    .catch(err => console.log(err) )
+ }
