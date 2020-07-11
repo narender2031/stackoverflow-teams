@@ -9,6 +9,7 @@ import Grid from '@material-ui/core/Grid'
 import Badge from '@material-ui/core/Badge'
 import NotificationsIcon from '@material-ui/icons/Notifications'
 import Avatar from '@material-ui/core/Avatar'
+import HouseIcon from '@material-ui/icons/House'
 import {connect} from 'react-redux'
 
 const styles = (theme) => ({
@@ -72,13 +73,18 @@ class NavigationBar extends Component {
                     <Toolbar className = {classes.toolBar}>
                         <Grid container spacing={2} className={classes.gridMain} >
                             <Grid item xs={2}  className={classes.frag}>
-                                <FilterBAndWIcon color="secondary" className={classes.icon}/>
+                                <Button className={classes.buttonAuth} color="secondary" component = {Link} to="/" >
+                                    <FilterBAndWIcon color="secondary" className={classes.icon}/>
+                                </Button>
                             </Grid>
                             <Grid item xs={8}/>
                             <Grid item xs={2}  className={classes.frag}>
 
                             {authenticated ? (
                             <Fragment>
+                                <Button className={classes.buttonAuth} color="secondary" component = {Link} to="/home" >
+                                    <HouseIcon/>
+                                </Button>
                                 <Button className={classes.buttonAuth} color="secondary" >
                                     <Badge badgeContent={0} color="error">
                                         <NotificationsIcon />

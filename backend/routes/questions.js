@@ -10,6 +10,13 @@ router.route('/').get((req, res) => {
         .catch(err => res.status(400).json({ error : err}))
 })
 
+//GET a particular question
+router.route('/:questionId').get((req, res) => {
+    Question.findById(req.params.questionId)
+        .then(question => res.json(question))
+        .catch(err => res.status(400).json({ error : err}))
+})
+
 //POST a question
 router.route('/add').post((req, res) => {
     const username = req.username
@@ -20,9 +27,11 @@ router.route('/add').post((req, res) => {
     const solvedStatus = false
     const starCount = 0
     const likeCount = 0
+    const dislikeCount = 0
     const answerCount = 0
 
-    const newQuestion = new Question({username, firstName, lastName, questionTitle, questionBody,solvedStatus, starCount, likeCount, answerCount})
+    const newQuestion = new Question({username, firstName, lastName, questionTitle, questionBody,
+        solvedStatus, starCount, likeCount,dislikeCount, answerCount})
 
     newQuestion.save()
         .then(() => res.json(newQuestion) )
@@ -113,7 +122,17 @@ router.route('/like/:questionId').get((req, res) => {
                 const newLike = new Likes({userId, questionId, likeState})
 
                 newLike.save()
-                    .then(() => res.json(newLike) )
+                    .then(() => console.log(newLike) )
+                    .catch(err => res.status(400).json({ error : err}))
+
+                Question.findById(questionId)
+                    .then((question) => {
+                        question.likeCount = question.likeCount + 1
+
+                        question.save()
+                            .then(() => res.json(question) )
+                            .catch(err => res.status(400).json({ error : err}))
+                    })
                     .catch(err => res.status(400).json({ error : err}))
             }
         })
@@ -122,7 +141,7 @@ router.route('/like/:questionId').get((req, res) => {
 
 
 //unlike a question
-router.route('/unlike/:questionId').get((req, res) => {
+router.route('/dislike/:questionId').get((req, res) => {
     const userId = req.userId
     const questionId = req.params.questionId
     const likeState = false
@@ -146,8 +165,8 @@ router.route('/unlike/:questionId').get((req, res) => {
                             
                         Question.findById(questionId)
                             .then((question) => {
-                                question.likeCount = question.likeCount - 1
                                 question.dislikeCount = question.dislikeCount + 1
+                                question.likeCount = question.likeCount - 1
 
                                 question.save()
                                     .then(() => res.json(question) )
@@ -162,7 +181,17 @@ router.route('/unlike/:questionId').get((req, res) => {
                 const newLike = new Likes({userId, questionId, likeState})
 
                 newLike.save()
-                    .then(() => res.json(newLike) )
+                    .then(() => console.log(newLike) )
+                    .catch(err => res.status(400).json({ error : err}))
+                
+                Question.findById(questionId)
+                    .then((question) => {
+                        question.dislikeCount = question.dislikeCount + 1
+
+                        question.save()
+                            .then(() => res.json(question) )
+                            .catch(err => res.status(400).json({ error : err}))
+                    })
                     .catch(err => res.status(400).json({ error : err}))
             }
         })

@@ -22,6 +22,7 @@ import signup from './pages/signup'
 import login from './pages/login'
 import home from './pages/home'
 import welcome from './pages/welcome'
+import question from './pages/question'
 
 //component
 import NavigationBar from './components/NavigationBar'
@@ -52,12 +53,13 @@ class App extends Component {
         <Provider store={store}>
           <Router>
             <NavigationBar />
-            <div className="container">
+            <div style={{overflow:'hidden'}}>
               <Switch>
                 <Route exact path="/" component={welcome} />
                 <Route exact path="/home" component={home} />
                 <Route exact path="/login" component={login} />
                 <Route exact path="/signup" component={signup} />
+                <Route exact path="/questions/:questionId" component={question} />
               </Switch>
             </div>
           </Router>

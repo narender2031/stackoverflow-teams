@@ -15,19 +15,26 @@ const styles = (theme) => ({
     pageTitle : {
         margin : '20px 0px 20px auto' ,
         fontFamily: 'Bebas Neue',
-        fontSize : '30px'
+        fontSize : '27px',
+        color : 'white'
     },
     form : {
         textAlign : 'center'
     },
+    formMain : {
+        backgroundColor : '#303030',
+    },
     button : {
         fontFamily: 'Bebas Neue',
         fontSize : '20px',
-        marginTop : '15px',
-        marginBottom : '5px'
+        marginTop : '10px',
+        marginBottom : '5px',
+        color : 'white'
     },
     textField : {
         marginBottom : '10px',
+        // border: '1px solid white',
+        borderRadius: '4px'
     }
 })
 
@@ -71,11 +78,11 @@ class signup extends Component {
         return (
             <Grid container spacing={2} className ={classes.form} >
                 <Grid item={true} sm /> 
-                <Grid item={true} sm >
+                <Grid item={true} sm className ={classes.formMain}>
                     <Typography variant="h4" className={classes.pageTitle}>
-                        Sign Up
+                        Register for a new account
                     </Typography>
-                    <form noValidate onSubmit ={this.handleSubmit } >
+                    <form noValidate onSubmit ={this.handleSubmit } style={{paddingBottom: '10px'}}>
                         <TextField 
                         id ="firstName" 
                         name="firstName" 
@@ -84,7 +91,8 @@ class signup extends Component {
                         variant="outlined"
                         className={classes.textField}
                         value={this.state.firstName} 
-                        onChange= {this.handleChange} fullWidth />
+                        onChange= {this.handleChange} fullWidth
+                        color ='secondary' />
 
                         <TextField 
                         id ="lastName" 
@@ -94,7 +102,8 @@ class signup extends Component {
                         variant="outlined"
                         className={classes.textField}
                         value={this.state.lastName} 
-                        onChange= {this.handleChange} fullWidth />
+                        onChange= {this.handleChange} fullWidth 
+                        color ='secondary'/>
                         
                         <TextField 
                         id ="email" 
@@ -104,7 +113,8 @@ class signup extends Component {
                         className={classes.textField}
                         variant="outlined"
                         value={this.state.email} 
-                        onChange= {this.handleChange} fullWidth />
+                        onChange= {this.handleChange} fullWidth 
+                        color ='secondary'/>
 
                         <TextField 
                         id ="username" 
@@ -114,7 +124,8 @@ class signup extends Component {
                         variant="outlined"
                         className={classes.textField}
                         value={this.state.username} 
-                        onChange= {this.handleChange} fullWidth />
+                        onChange= {this.handleChange} fullWidth 
+                        color ='secondary'/>
 
                         <TextField 
                         id ="password" 
@@ -124,7 +135,8 @@ class signup extends Component {
                         className={classes.textField}
                         variant="outlined"
                         value={this.state.password} 
-                        onChange= {this.handleChange} fullWidth />
+                        onChange= {this.handleChange} fullWidth
+                        color ='secondary' />
 
                         <TextField 
                         id ="confirmPassword" 
@@ -134,13 +146,14 @@ class signup extends Component {
                         className={classes.textField}
                         variant="outlined"
                         value={this.state.confirmPassword} 
-                        onChange= {this.handleChange} fullWidth />
+                        onChange= {this.handleChange} fullWidth 
+                        color ='secondary'/>
 
-                        <Button type="submit" variant="contained" color="primary" className={classes.button}>
-                            Confirm
+                        <Button type="submit" variant="contained" color="secondary" className={classes.button}>
+                            Lets Go!
                         </Button>
                         <br />
-                        <small>Already have an account ? Login <Link to="/login" >here</Link></small>
+                        <small style={{color : '#aeaeae', paddingBottom: '20px'}}>Already have an account ? Login <Link to="/login" style={{color : '#bf9fdd', textDecoration: 'none'}}>here</Link></small>
                     </form>
                 </Grid> 
                 <Grid item={true} sm /> 

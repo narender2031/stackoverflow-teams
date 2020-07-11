@@ -1,9 +1,17 @@
 const router = require('express').Router()
 let Answer = require('../models/answerModel')
+let Question = require('../models/questionModel')
 
 //GET all the answers posted by everyone
 router.route('/').get((req, res) => {
     Answer.find()
+        .then(answers => res.json(answers))
+        .catch(err => res.status(400).json({ error : err}))
+})
+
+//GET all the answers for a particular questionId
+router.route('/:questionId').get((req, res) => {
+    Answer.find({questionId : req.params.questionId})
         .then(answers => res.json(answers))
         .catch(err => res.status(400).json({ error : err}))
 })
@@ -20,6 +28,16 @@ router.route('/add').post((req, res) => {
     const answerCount = 0
 
     const newAnswer = new Answer({username, firstName, lastName, answerBody,questionId, starCount, likeCount, answerCount})
+
+    Question.findById(req.body.questionId)
+        .then((question) => {
+            question.answerCount = question.answerCount + 1
+
+            question.save()
+                .then(() => console.log(question))
+                .catch(err => res.status(400).json({ error : err }))
+        })
+        .catch(err => res.status(400).json({ error : err}))
 
     newAnswer.save()
         .then(() => res.json(newAnswer) )

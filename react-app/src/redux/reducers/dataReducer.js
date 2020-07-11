@@ -1,8 +1,9 @@
-import {SET_QUESTIONS,SET_ANSWERS} from '../types'
+import {SET_QUESTIONS, LIKE_QUESTION, DISLIKE_QUESTION, SET_SPECIFIC_QUESTION, SET_SPECIFIC_ANSWERS} from '../types'
 
 const initialState = {
    questions : [],
-   answers : []
+   specificQuestion : {},
+   specificAnswers : []
 }
 
 export default function (state = initialState, action){
@@ -12,10 +13,23 @@ export default function (state = initialState, action){
                 ...state,
                 questions : action.payload,
             }
-        case SET_ANSWERS : 
+        case LIKE_QUESTION : 
             return {
                 ...state,
-                answers : action.payload,
+            }
+        case DISLIKE_QUESTION : 
+            return {
+                ...state,
+            }
+        case SET_SPECIFIC_QUESTION : 
+            return {
+                ...state,
+                specificQuestion : action.payload,
+            }
+        case SET_SPECIFIC_ANSWERS : 
+            return {
+                ...state,
+                specificAnswers : action.payload,
             }
        default : 
            return {
