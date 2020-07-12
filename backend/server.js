@@ -14,6 +14,7 @@ const usersRouter = require('./routes/users')
 const authUsersRouter = require('./routes/authUsers')
 const questionsRouter = require('./routes/questions')
 const answersRouter = require('./routes/answers')
+const notificationsRouter = require('./routes/notifications')
 
 const mongoAuth = require('./routes/mongoAuth')
 
@@ -29,6 +30,7 @@ app.use('/api/users' , usersRouter)
 app.use('/api/user' , mongoAuth, authUsersRouter)
 app.use('/api/questions' , mongoAuth,  questionsRouter)
 app.use('/api/answers' , mongoAuth, answersRouter)
+app.use('/api/notifications' , mongoAuth, notificationsRouter)
 
 connection.once('open' , () => {
     console.log("connected to mongo")

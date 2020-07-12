@@ -17,6 +17,32 @@ router.route('/:questionId').get((req, res) => {
         .catch(err => res.status(400).json({ error : err}))
 })
 
+//GET all the answers for a particular questionId
+router.route('/toggleCorrectStatus/:answerId').get((req, res) => {
+    Answer.findById(req.params.answerId)
+        .then(answer => {
+            answer.statusCorrect = !answer.statusCorrect
+            answer.save()
+                .then(() =>{
+                    Question.findById(answer.questionId)
+                        .then(question => {
+                            if(answer.statusCorrect)
+                                question.solvedStatus = true
+                            else
+                                question.solvedStatus = false
+
+                            question.save()
+                                .then(() => {})
+                                .catch(err => res.status(400).json({ error : err}))
+                        })
+                        .catch(err => res.status(400).json({ error : err}))
+                })
+                .catch(err => res.status(400).json({ error : err}))
+
+        })
+        .catch(err => res.status(400).json({ error : err}))
+})
+
 //POST an answer
 router.route('/add').post((req, res) => {
     const username = req.username
@@ -26,12 +52,12 @@ router.route('/add').post((req, res) => {
     const questionId = req.body.questionId
     const starCount = 0
     const likeCount = 0
-    const correctAnswer = false
+    const statusCorrect = false
     
     Question.findById(req.body.questionId)
         .then((question) => {
 
-            const newAnswer = new Answer({username, firstName, lastName, answerBody,questionId, starCount, likeCount, correctAnswer})
+            const newAnswer = new Answer({username, firstName, lastName, answerBody,questionId, starCount, likeCount, statusCorrect})
 
             //check if the person who has posted the question is not answering it
             if(req.username === question.username){

@@ -9,6 +9,7 @@ export const SET_SPECIFIC_ANSWERS = 'SET_SPECIFIC_ANSWERS'
 export const SET_ALL_USER = 'SET_ALL_USER' 
 
 //ui reducer types
+export const SET_NOTIFICATIONS = 'SET_NOTIFICATIONS' 
 
 //data reducer types
 export const SET_QUESTIONS = 'SET_QUESTIONS'
@@ -20,3 +21,4 @@ export const POST_QUESTION = 'POST_QUESTION'
 export const POST_ANSWER = 'POST_ANSWER'
 export const DELETE_ANSWER = 'DELETE_ANSWER'
 export const DELETE_QUESTION = 'DELETE_QUESTION'
+export const TOGGLE_CORRECT_STATUS = 'TOGGLE_CORRECT_STATUS'

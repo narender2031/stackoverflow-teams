@@ -6,6 +6,7 @@ import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
 import Zoom from '@material-ui/core/Zoom'
 import ButtonBase from '@material-ui/core/ButtonBase'
+import IconButton from '@material-ui/core/IconButton'
 import Avatar from '@material-ui/core/Avatar'
 import Chip from '@material-ui/core/Chip'
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown'
@@ -36,8 +37,7 @@ const styles = (theme) => ({
       height: theme.spacing(4),
     },
     arrow : {
-      width: theme.spacing(4.2),
-      fontSize : '20px',
+      fontSize : '40px',
       color : '#ff5436'
     },
     username : {

@@ -23,8 +23,8 @@ const answerSchema = new Schema({
         type : String,
         required : true
     },
-    correctAnswer : {
-        type : Number
+    statusCorrect : {
+        type : Boolean
     },
     starCount : {
         type : Number

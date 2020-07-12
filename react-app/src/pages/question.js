@@ -87,7 +87,7 @@ export class question extends Component {
   showAnswersCard(){ 
     const {specificAnswers } = this.props.data
 
-    return specificAnswers.map( specificAnswer => <AnswerCard key={specificAnswer._id} answer={specificAnswer} />)
+    return specificAnswers.map( specificAnswer => <AnswerCard key={specificAnswer._id} answer={specificAnswer}/>)
   }
 
   render() {
@@ -117,7 +117,7 @@ export class question extends Component {
                       </Button>
                   </ListItem>
                   <ListItem button>
-                      <Button className ={classes.side} component = {Link} to="/users" style={{color : this.state.link === "users" ? 'white' : ''}}>
+                      <Button className ={classes.side} component = {Link} to="/allUsers" style={{color : this.state.link === "users" ? 'white' : ''}}>
                           <PeopleIcon className ={classes.sideIcon} style={{color : this.state.link === "users" ? 'white' : ''}}/>
                           &nbsp;Users
                       </Button>
@@ -126,9 +126,6 @@ export class question extends Component {
               </List>
           </Grid>
           <Grid container item sm={10}>
-              <Grid item sm={8} className ={classes.allQ}>
-                  All Questions
-              </Grid>
               <Grid item sm={10}>                        
                   {this.showQuestionCard()}
               </Grid>

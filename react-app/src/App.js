@@ -26,6 +26,7 @@ import question from './pages/question'
 import user from './pages/user'
 import allUsers from './pages/allUsers'
 import leaderboard from './pages/leaderboard'
+import notifications from './pages/notifications'
 
 //component
 import NavigationBar from './components/NavigationBar'
@@ -66,6 +67,7 @@ class App extends Component {
                 <Route exact path="/users/:username" component={user} />
                 <Route exact path="/allUsers/" component={allUsers} />
                 <Route exact path="/leaderboard" component={leaderboard} />
+                <Route exact path="/notifications" component={notifications} />
               </Switch>
             </div>
           </Router>

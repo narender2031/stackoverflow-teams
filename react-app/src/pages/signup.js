@@ -34,8 +34,22 @@ const styles = (theme) => ({
     textField : {
         marginBottom : '10px',
         // border: '1px solid white',
-        borderRadius: '4px'
-    }
+        borderRadius: '4px',
+        '&::focus' : {
+            backgroundColor : '#a3a3a8',
+            color: 'white',
+        },
+        '&::placeholder': {
+                //   textOverflow: 'ellipsis !important',
+            color: 'white'
+         }
+    },
+    root: {
+          '&.Mui-focused fieldset': {
+            borderColor: 'white',
+          },
+        },
+
 })
 
 class signup extends Component {
@@ -92,7 +106,11 @@ class signup extends Component {
                         className={classes.textField}
                         value={this.state.firstName} 
                         onChange= {this.handleChange} fullWidth
-                        color ='secondary' />
+                        color ='secondary' 
+                        InputLabelProps={{
+                            style: {
+                              color: 'white'
+                            } }} />
 
                         <TextField 
                         id ="lastName" 
@@ -103,7 +121,11 @@ class signup extends Component {
                         className={classes.textField}
                         value={this.state.lastName} 
                         onChange= {this.handleChange} fullWidth 
-                        color ='secondary'/>
+                        color ='secondary'
+                        InputLabelProps={{
+                            style: {
+                              color: 'white'
+                            } }} />
                         
                         <TextField 
                         id ="email" 
@@ -114,7 +136,11 @@ class signup extends Component {
                         variant="outlined"
                         value={this.state.email} 
                         onChange= {this.handleChange} fullWidth 
-                        color ='secondary'/>
+                        color ='secondary'
+                        InputLabelProps={{
+                            style: {
+                              color: 'white'
+                            } }} />
 
                         <TextField 
                         id ="username" 
@@ -125,7 +151,11 @@ class signup extends Component {
                         className={classes.textField}
                         value={this.state.username} 
                         onChange= {this.handleChange} fullWidth 
-                        color ='secondary'/>
+                        color ='secondary'
+                        InputLabelProps={{
+                            style: {
+                              color: 'white'
+                            } }} />
 
                         <TextField 
                         id ="password" 
@@ -136,7 +166,11 @@ class signup extends Component {
                         variant="outlined"
                         value={this.state.password} 
                         onChange= {this.handleChange} fullWidth
-                        color ='secondary' />
+                        color ='secondary' 
+                        InputLabelProps={{
+                            style: {
+                              color: 'white'
+                            } }} />
 
                         <TextField 
                         id ="confirmPassword" 
@@ -147,7 +181,11 @@ class signup extends Component {
                         variant="outlined"
                         value={this.state.confirmPassword} 
                         onChange= {this.handleChange} fullWidth 
-                        color ='secondary'/>
+                        color ='secondary'
+                        InputLabelProps={{
+                            style: {
+                              color: 'white'
+                            } }} />
 
                         <Button type="submit" variant="contained" color="secondary" className={classes.button}>
                             Lets Go!

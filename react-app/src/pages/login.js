@@ -34,7 +34,7 @@ const styles = (theme) => ({
     textField : {
         marginBottom : '10px',
         // border: '1px solid white',
-        borderRadius: '4px'
+        borderRadius: '4px',
     }
 })
 
@@ -83,7 +83,11 @@ class login extends Component {
                         variant="outlined"
                         value={this.state.username} 
                         onChange= {this.handleChange} fullWidth 
-                        color ='secondary' />
+                        color ='secondary'
+                        InputLabelProps={{
+                            style: {
+                              color: 'white'
+                            } }} />
 
                         <TextField 
                         id ="password" 
@@ -94,9 +98,13 @@ class login extends Component {
                         variant="outlined"
                         value={this.state.password} 
                         onChange= {this.handleChange} fullWidth 
-                        color ='secondary' />
+                        color ='secondary'
+                        InputLabelProps={{
+                            style: {
+                              color: 'white'
+                            } }} />
 
-                        <Button type="submit" variant="contained" color="primary" className={classes.button}>
+                        <Button type="submit" variant="contained" color="secondary" className={classes.button}>
                             Confirm
                         </Button>
                         <br />

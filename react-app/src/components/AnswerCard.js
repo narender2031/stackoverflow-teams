@@ -8,16 +8,20 @@ import Zoom from '@material-ui/core/Zoom'
 import ButtonBase from '@material-ui/core/ButtonBase'
 import Avatar from '@material-ui/core/Avatar'
 import Chip from '@material-ui/core/Chip'
-import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown'
-import CheckCircleIcon from '@material-ui/icons/CheckCircle'
-import ArrowDropUpIcon from '@material-ui/icons/ArrowDropUp'
+import FormControlLabel from '@material-ui/core/FormControlLabel'
+import Checkbox from '@material-ui/core/Checkbox'
+import CircleCheckedFilled from '@material-ui/icons/CheckCircle'
+import CircleUnchecked from '@material-ui/icons/RadioButtonUnchecked'
+import CircleChecked from '@material-ui/icons/OfflineBolt'
+import CloseIcon from '@material-ui/icons/Close'
+
 import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
 import MuiLink from '@material-ui/core/Link'
 import DeleteQuestion from './DeleteQuestion'
 import ScheduleIcon from '@material-ui/icons/Schedule'
 import {connect} from 'react-redux'
-import {likeQuestion , dislikeQuestion} from '../redux/actions/dataActions'
+import {toggleCorrectStatus} from '../redux/actions/dataActions'
 
 const styles = (theme) => ({
     ...theme.spread,
@@ -53,6 +57,9 @@ const styles = (theme) => ({
       fontFamily : 'Hind',
       textTransform : 'capitalize',
     },
+    checkbox : {
+      marginLeft : '0px'
+    }
 })
 
 export class AnswerCard extends Component {
@@ -70,9 +77,22 @@ export class AnswerCard extends Component {
     })
   }    
 
+  handleChange = (event) => {
+    this.setState({
+        [event.target.name] : event.target.value
+    })
+  }
+
+  handleStatusCorrect = () => {
+    this.props.toggleCorrectStatus(this.props.answer._id)
+  }
+
   render() {
     dayjs.extend(relativeTime)
-    const { classes, answer : { _id, firstName, lastName,username,answerBody,updatedAt }} = this.props
+    const { classes, answer : { firstName, lastName,username,answerBody, updatedAt, statusCorrect }} = this.props
+    const { specificQuestion } = this.props.data
+    const { user } = this.props.user
+
     const fn = firstName ? firstName.toString().charAt(0) : firstName
     const ln = lastName ? lastName.toString().charAt(0) : lastName
     return (
@@ -84,6 +104,19 @@ export class AnswerCard extends Component {
                 <ButtonBase >
                   <Avatar className={classes.avatar}>{fn}{ln}</Avatar>
                 </ButtonBase>
+              </Grid>
+              <Grid item sm>
+                { user.username === specificQuestion.username ? (
+                  <FormControlLabel  className={classes.checkbox} onClick={this.handleStatusCorrect}
+                  checked = {statusCorrect}
+                  control={<Checkbox 
+                      icon={<CircleUnchecked style={{ fontSize:'25px', color : '#b8b8b8'}}/>}
+                      checkedIcon={<CircleCheckedFilled style={{color : '#88dc7b', fontSize:'25px'}}/>} name="checked"/>}  />
+                ) : (
+                  <div></div>
+                )
+
+              }
               </Grid>
             </Grid>
 
@@ -118,7 +151,8 @@ export class AnswerCard extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  user : state.user
+  user : state.user,
+  data : state.data
 })
 
-export default connect(mapStateToProps , {likeQuestion, dislikeQuestion})(withStyles(styles)(AnswerCard))
+export default connect(mapStateToProps , { toggleCorrectStatus})(withStyles(styles)(AnswerCard))

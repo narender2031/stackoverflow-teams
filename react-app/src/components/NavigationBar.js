@@ -12,6 +12,7 @@ import Avatar from '@material-ui/core/Avatar'
 import HouseIcon from '@material-ui/icons/House'
 import RecentActorsIcon from '@material-ui/icons/RecentActors'
 import {connect} from 'react-redux'
+import {getNotifications} from '../redux/actions/uiActions'
 
 const styles = (theme) => ({
     ...theme.spread,
@@ -65,9 +66,16 @@ class NavigationBar extends Component {
             open : !this.state.open
         })
     }
+
+    componentDidMount(){
+        this.props.getNotifications()
+    }
+
     render() {
         const {classes} = this.props
         const {authenticated , user : {firstName , lastName}} = this.props.user
+        const {notifications} = this.props.ui
+
         const fn = firstName ? firstName.toString().charAt(0) : firstName
         const ln = lastName ? lastName.toString().charAt(0) : lastName
         return (
@@ -91,8 +99,8 @@ class NavigationBar extends Component {
                                 <Button className={classes.buttonAuth} color="secondary" component = {Link} to="/leaderboard" >
                                     <RecentActorsIcon />
                                 </Button>
-                                <Button className={classes.buttonAuth} color="secondary" >
-                                    <Badge badgeContent={0} color="error">
+                                <Button className={classes.buttonAuth} color="secondary" component = {Link} to="/notifications">
+                                    <Badge badgeContent={notifications.length} color="error">
                                         <NotificationsIcon />
                                     </Badge>
                                 </Button>
@@ -116,8 +124,9 @@ class NavigationBar extends Component {
 }
 
 const mapStateToProps = (state) => ({
-    user : state.user
+    user : state.user,
+    ui : state.ui,
 })
 
-export default  connect(mapStateToProps)(withStyles(styles)(NavigationBar))
+export default  connect(mapStateToProps, {getNotifications})(withStyles(styles)(NavigationBar))
                         

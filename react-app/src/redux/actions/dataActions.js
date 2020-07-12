@@ -1,5 +1,5 @@
 import {SET_QUESTIONS, SET_ANSWERS, LIKE_QUESTION, DISLIKE_QUESTION,SET_SPECIFIC_QUESTION, SET_SPECIFIC_ANSWERS,
-     POST_ANSWER,POST_QUESTION, DELETE_QUESTION} from '../types'
+     POST_ANSWER,POST_QUESTION, DELETE_QUESTION, TOGGLE_CORRECT_STATUS} from '../types'
 import axios from 'axios'
 
 //get all the questions posted 
@@ -101,6 +101,17 @@ export const deleteQuestion = (questionId) => (dispatch) => {
         dispatch({
             type : DELETE_QUESTION,
             payload : questionId
+        })
+    })
+}
+
+//Toggle CorrectStatus onclick
+export const toggleCorrectStatus = (answerId) => (dispatch) => {
+    axios.get(`/answers/toggleCorrectStatus/${answerId}`)
+    .then(() => {
+        dispatch({
+            type : TOGGLE_CORRECT_STATUS,
+            payload : answerId
         })
     })
 }
