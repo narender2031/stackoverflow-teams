@@ -1,4 +1,5 @@
-import {SET_QUESTIONS, SET_ANSWERS, LIKE_QUESTION, DISLIKE_QUESTION,SET_SPECIFIC_QUESTION, SET_SPECIFIC_ANSWERS} from '../types'
+import {SET_QUESTIONS, SET_ANSWERS, LIKE_QUESTION, DISLIKE_QUESTION,SET_SPECIFIC_QUESTION, SET_SPECIFIC_ANSWERS,
+     POST_ANSWER,POST_QUESTION, DELETE_QUESTION} from '../types'
 import axios from 'axios'
 
 //get all the questions posted 
@@ -71,3 +72,35 @@ export const getSpecificAnswers = (questionId) => (dispatch) => {
     })
 }
 
+//get all answers related to that question
+export const postAnswer = (answerDetails) => (dispatch) => {
+    axios.post('/answers/add' , answerDetails)
+    .then(res => {
+        dispatch({
+            type : POST_ANSWER,
+            payload : res.data
+        })
+    })
+}
+
+//get all answers related to that question
+export const postQuestion = (newQuestion) => (dispatch) => {
+    axios.post('/questions/add' , newQuestion)
+    .then(res => {
+        dispatch({
+            type : POST_QUESTION,
+            payload : res.data
+        })
+    })
+}
+
+//delete specific question
+export const deleteQuestion = (questionId) => (dispatch) => {
+    axios.delete(`/questions/delete/${questionId}`)
+    .then(() => {
+        dispatch({
+            type : DELETE_QUESTION,
+            payload : questionId
+        })
+    })
+}

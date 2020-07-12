@@ -34,9 +34,6 @@ const userSchema = new Schema({
     location : {
         type :String,
     },
-    starCount : {
-        type : Number,
-    },
     likeCount : {
         type : Number,
     },
@@ -48,6 +45,10 @@ const userSchema = new Schema({
     },
     questionCount : {
         type : Number,
+    },
+    correctAnswerCount : {
+        type : Number,
+
     }
 
 },{

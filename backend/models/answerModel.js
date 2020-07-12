@@ -22,6 +22,15 @@ const answerSchema = new Schema({
     questionId : {
         type : String,
         required : true
+    },
+    correctAnswer : {
+        type : Number
+    },
+    starCount : {
+        type : Number
+    },
+    likeCount : {
+        type : Number
     }
 },{
     timestamps : true,

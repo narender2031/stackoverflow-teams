@@ -15,19 +15,26 @@ const styles = (theme) => ({
     pageTitle : {
         margin : '20px 0px 20px auto' ,
         fontFamily: 'Bebas Neue',
-        fontSize : '30px'
+        fontSize : '27px',
+        color : 'white'
     },
     form : {
         textAlign : 'center'
     },
+    formMain : {
+        backgroundColor : '#303030',
+    },
     button : {
         fontFamily: 'Bebas Neue',
         fontSize : '20px',
-        marginTop : '15px',
-        marginBottom : '5px'
+        marginTop : '10px',
+        marginBottom : '5px',
+        color : 'white'
     },
     textField : {
         marginBottom : '10px',
+        // border: '1px solid white',
+        borderRadius: '4px'
     }
 })
 
@@ -61,11 +68,11 @@ class login extends Component {
         return (
             <Grid container spacing={2} className ={classes.form} >
                 <Grid item={true} sm /> 
-                <Grid item={true} sm >
+                <Grid item={true} sm  className ={classes.formMain}>
                     <Typography variant="h4" className={classes.pageTitle}>
-                        Login
+                        Login to your workspace
                     </Typography>
-                    <form noValidate onSubmit ={this.handleSubmit }>
+                    <form noValidate onSubmit ={this.handleSubmit } style={{paddingBottom: '10px'}}>
 
                         <TextField 
                         id ="username" 
@@ -75,7 +82,8 @@ class login extends Component {
                         className={classes.textField}
                         variant="outlined"
                         value={this.state.username} 
-                        onChange= {this.handleChange} fullWidth />
+                        onChange= {this.handleChange} fullWidth 
+                        color ='secondary' />
 
                         <TextField 
                         id ="password" 
@@ -85,13 +93,14 @@ class login extends Component {
                         className={classes.textField}
                         variant="outlined"
                         value={this.state.password} 
-                        onChange= {this.handleChange} fullWidth />
+                        onChange= {this.handleChange} fullWidth 
+                        color ='secondary' />
 
                         <Button type="submit" variant="contained" color="primary" className={classes.button}>
                             Confirm
                         </Button>
                         <br />
-                        <small>Don't have an account ? Sign up <Link to="/signup" >here</Link></small>
+                        <small style={{color : '#aeaeae', paddingBottom: '20px'}}>Don't have an account ? Sign up <Link to="/signup" style={{color : '#bf9fdd', textDecoration: 'none'}}>here</Link></small>
                     </form>
                 </Grid> 
                 <Grid item={true} sm /> 

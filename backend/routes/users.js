@@ -5,7 +5,20 @@ let User = require('../models/userModel')
 //get details of a single user, using their username 
 router.route('/:username').get((req, res) => {
     User.find({username : req.params.username})
-        .then(user => res.json(user))
+        .then(userArray => {
+            userArray.forEach(user => {
+                res.json(user)
+            });
+        })
+        .catch(err => res.status(400).json({ error : err}))
+})
+
+//get details of a single user, using their username 
+router.route('/').get((req, res) => {
+    User.find()
+        .then(userArray => {
+            res.json(userArray)
+        })
         .catch(err => res.status(400).json({ error : err}))
 })
 
@@ -36,13 +49,13 @@ router.route('/signup').post((req, res) => {
     const bio = ''
     const title = ''
     const location = ''
-    const starCount = 0
     const likeCount = 0
     const leaderboardPosition = 0
     const answerCount = 0
+    const correctAnswerCount = 0
     const questionCount = 0
 
-    const newUser = new User({username, password, firstName, lastName, email, bio, title, location, starCount, likeCount, leaderboardPosition, questionCount, answerCount})
+    const newUser = new User({username, password, firstName, lastName, email, bio, title, location, likeCount, leaderboardPosition, questionCount, correctAnswerCount, answerCount})
     // const newUser = new User({username, password, firstName, lastName, email})
 
     newUser.save()

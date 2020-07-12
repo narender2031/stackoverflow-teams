@@ -5,8 +5,9 @@ import Grid from '@material-ui/core/Grid'
 // import axios from 'axios'
 
 import QuestionCard from '../components/QuestionCard'
+import PostAnswer from '../components/PostAnswer'
 import {connect} from 'react-redux'
-import {likeQuestion , dislikeQuestion, getSpecificQuestion ,getSpecificAnswers} from '../redux/actions/dataActions'
+import { getSpecificQuestion ,getSpecificAnswers} from '../redux/actions/dataActions'
 
 const styles = (theme) => ({
     ...theme.spread,
@@ -46,12 +47,14 @@ export class question extends Component {
   }
 
   showAnswersCard(){ 
-    const {specificAnswers} = this.props.data
+    // const {specificQuestion : {_id} , specificAnswers} = this.props.data
 
     // return specificAnswers.map( specificAnswers => <QuestionCard key={specificAnswers._id} question={specificAnswers} />)
   }
 
   render() {
+    const {specificQuestion : {_id} } = this.props.data
+
     return (
         <Grid container spacing={5}>
             <Grid item sm={3} style={{border : '1px solid black'}}>
@@ -60,6 +63,7 @@ export class question extends Component {
             <Grid item sm={9} style={{border : '1px solid black'}}>
                 {this.showQuestionCard()}
                 {this.showAnswersCard()}
+                <PostAnswer questionId={_id} />
             </Grid>
         </Grid>
     )
@@ -67,7 +71,7 @@ export class question extends Component {
 }
 
 const mapStateToProps = (state) => ({
-data : state.data
+  data : state.data
 })
 
-export default connect(mapStateToProps , {likeQuestion, dislikeQuestion, getSpecificQuestion, getSpecificAnswers})(withStyles(styles)(question))
+export default connect(mapStateToProps , { getSpecificQuestion, getSpecificAnswers})(withStyles(styles)(question))

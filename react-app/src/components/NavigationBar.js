@@ -10,6 +10,7 @@ import Badge from '@material-ui/core/Badge'
 import NotificationsIcon from '@material-ui/icons/Notifications'
 import Avatar from '@material-ui/core/Avatar'
 import HouseIcon from '@material-ui/icons/House'
+import RecentActorsIcon from '@material-ui/icons/RecentActors'
 import {connect} from 'react-redux'
 
 const styles = (theme) => ({
@@ -67,6 +68,8 @@ class NavigationBar extends Component {
     render() {
         const {classes} = this.props
         const {authenticated , user : {firstName , lastName}} = this.props.user
+        const fn = firstName ? firstName.toString().charAt(0) : firstName
+        const ln = lastName ? lastName.toString().charAt(0) : lastName
         return (
             <div className={classes.navBar}> 
                 <AppBar position="static" className={classes.appBar}>
@@ -77,21 +80,24 @@ class NavigationBar extends Component {
                                     <FilterBAndWIcon color="secondary" className={classes.icon}/>
                                 </Button>
                             </Grid>
-                            <Grid item xs={8}/>
-                            <Grid item xs={2}  className={classes.frag}>
+                            <Grid item xs={7}/>
+                            <Grid item xs={3}  className={classes.frag}>
 
                             {authenticated ? (
                             <Fragment>
                                 <Button className={classes.buttonAuth} color="secondary" component = {Link} to="/home" >
                                     <HouseIcon/>
                                 </Button>
+                                <Button className={classes.buttonAuth} color="secondary" component = {Link} to="/leaderboard" >
+                                    <RecentActorsIcon />
+                                </Button>
                                 <Button className={classes.buttonAuth} color="secondary" >
                                     <Badge badgeContent={0} color="error">
                                         <NotificationsIcon />
                                     </Badge>
                                 </Button>
-                                <Button className={classes.buttonAuth} color="secondary" >
-                                    <Avatar className={classes.avatar}>{firstName}{lastName}</Avatar>
+                                <Button className={classes.buttonAuth} color="secondary" component = {Link} to={`/users/${this.props.user.user.username}`}>
+                                    <Avatar className={classes.avatar}>{fn}{ln}</Avatar>
                                 </Button>
                             </Fragment>
                             ) : (

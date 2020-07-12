@@ -2,6 +2,7 @@ const router = require('express').Router()
 let Question = require('../models/questionModel')
 let Answer = require('../models/answerModel')
 let Likes = require('../models/likesModel')
+let User = require('../models/userModel')
 
 //GET all the questions posted by everyone
 router.route('/').get((req, res) => {
@@ -29,13 +30,29 @@ router.route('/add').post((req, res) => {
     const likeCount = 0
     const dislikeCount = 0
     const answerCount = 0
-
+    
     const newQuestion = new Question({username, firstName, lastName, questionTitle, questionBody,
         solvedStatus, starCount, likeCount,dislikeCount, answerCount})
 
-    newQuestion.save()
-        .then(() => res.json(newQuestion) )
-        .catch(err => res.status(400).json({ error : err}))
+    User.find({username : req.username})
+    .then((userArray) => {
+        userArray.forEach(user => {
+            user.leaderboardPosition = user.leaderboardPosition + 10
+        
+            user.save()
+                .then(() => {
+                    // console.log(user)
+                    newQuestion.save()
+                        .then(() => res.json(newQuestion) )
+                        .catch(err => res.status(400).json({ error : err}))
+                })
+                .catch(err => res.status(400).json({ error : err}))
+        })
+    })
+    .catch(err => res.status(400).json({ error : err}))
+
+
+    
 })
 
 //UPDATE a question

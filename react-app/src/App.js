@@ -23,6 +23,8 @@ import login from './pages/login'
 import home from './pages/home'
 import welcome from './pages/welcome'
 import question from './pages/question'
+import user from './pages/user'
+import leaderboard from './pages/leaderboard'
 
 //component
 import NavigationBar from './components/NavigationBar'
@@ -60,6 +62,8 @@ class App extends Component {
                 <Route exact path="/login" component={login} />
                 <Route exact path="/signup" component={signup} />
                 <Route exact path="/questions/:questionId" component={question} />
+                <Route exact path="/users/:username" component={user} />
+                <Route exact path="/leaderboard" component={leaderboard} />
               </Switch>
             </div>
           </Router>

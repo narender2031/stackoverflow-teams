@@ -1,4 +1,5 @@
-import {SET_AUTHENTICATED , LOADING_USER, SET_UNAUTHENTICATED, SET_AUTHENTICATED_USER} from '../types'
+import {SET_AUTHENTICATED , LOADING_USER, SET_UNAUTHENTICATED, SET_AUTHENTICATED_USER, SET_OTHER_USER,
+    SET_ALL_USER} from '../types'
 import axios from 'axios'
 
 export const signupUser = (newUser, history) => (dispatch) => {
@@ -53,13 +54,37 @@ export const logoutUser = () => (dispatch) => {
     })
 }
 
-//get the todo items
+//get the authenticated user data
 export const getAuthenticatedUserData = () => (dispatch) => {
     axios.get('/user/getAuthenticatedUserData/')
     .then(res => {
         console.log(res.data)
         dispatch({
             type : SET_AUTHENTICATED_USER,
+            payload : res.data
+        })
+    })
+    .catch(err => console.log(err) )
+}
+
+//get the user data
+export const getUserData = (username) => (dispatch) => {
+    axios.get(`/users/${username}`)
+    .then(res => {
+        dispatch({
+            type : SET_OTHER_USER,
+            payload : res.data
+        })
+    })
+    .catch(err => console.log(err) )
+}
+
+//get all the users
+export const getAllUsers = () => (dispatch) => {
+    axios.get('/users/')
+    .then(res => {
+        dispatch({
+            type : SET_ALL_USER,
             payload : res.data
         })
     })
