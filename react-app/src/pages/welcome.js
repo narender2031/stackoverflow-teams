@@ -14,7 +14,7 @@ const styles = (theme) => ({
         color : '#fff3e0'
     },
     paper : {
-        backgroundColor : '#e8e8e8'
+        backgroundColor : '#d4d4d9'
     }
 })
 
@@ -38,7 +38,6 @@ class welcome extends Component {
             <Grid container spacing={2} className={classes.gridMain} >
                 <Grid item xs={2}/>
                 <Grid item xs={8} style={{textAlign:"center"}} >
-                    {this.state.curTime}
                     <Zoom in={true} style={{ transitionDelay: '500ms' }}>
                         <Paper elevation={4} className={classes.paper} > 
                             <div style={{fontSize:"50px", lineHeight : '20px', paddingTop : '100px'}}>

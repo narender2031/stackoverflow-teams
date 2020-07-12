@@ -11,10 +11,9 @@ import PublicIcon from '@material-ui/icons/Public'
 import LocalOfferIcon from '@material-ui/icons/LocalOffer'
 import PeopleIcon from '@material-ui/icons/People'
 
-import QuestionCard from '../components/QuestionCard'
+import UserCard from '../components/UserCard'
 import {connect} from 'react-redux'
-import {getQuestions, getAnswers} from '../redux/actions/dataActions'
-import PostQuestion from '../components/PostQuestion'
+import {getAllUsers} from '../redux/actions/userActions'
 
 const styles = (theme) => ({
     ...theme.spread,
@@ -47,10 +46,10 @@ class home extends Component {
         link : ''
     }
     componentDidMount(){
-        const {questions} = this.props.data
+        const {allUsers} = this.props.user
         //get the user data and todo items of authenticated user
-        if(questions)
-            this.props.getQuestions()
+        if(allUsers)
+            this.props.getAllUsers()
 
         var main = window.location.origin.toString() + "/"
         var full = window.location.href.toString()
@@ -61,10 +60,10 @@ class home extends Component {
 
     }
     
-    showQuestionCard(){ 
-        const {questions} = this.props.data
+    showUserCard(){ 
+        const {allUsers} = this.props.user
         
-        return questions.map( question => <QuestionCard key={question._id} question={question} />)
+        return allUsers.map( user => <UserCard key={user._id} user={user} />)
     }
     
     render() {
@@ -106,14 +105,11 @@ class home extends Component {
                     </List>
                 </Grid>
                 <Grid container item sm={10}>
-                    <Grid item sm={8} className ={classes.allQ}>
-                        All Questions
-                    </Grid>
-                    <Grid item sm={2} >
-                        <PostQuestion/>
+                    <Grid item sm={10} className ={classes.allQ}>
+                        Browse all users
                     </Grid>
                     <Grid item sm={10}>                        
-                        {this.showQuestionCard()}
+                        {this.showUserCard()}
                     </Grid>
                 </Grid>
             </Grid>
@@ -122,7 +118,7 @@ class home extends Component {
 }
 
 const mapStateToProps = (state) => ({
-    data : state.data
+    user : state.user
 })
 
-export default  connect(mapStateToProps, {getQuestions, getAnswers})(withStyles(styles)(home))
+export default  connect(mapStateToProps, {getAllUsers})(withStyles(styles)(home))

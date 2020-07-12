@@ -3,10 +3,11 @@ let Question = require('../models/questionModel')
 let Answer = require('../models/answerModel')
 let Likes = require('../models/likesModel')
 let User = require('../models/userModel')
+let Notification = require('../models/notificationModel')
 
 //GET all the questions posted by everyone
 router.route('/').get((req, res) => {
-    Question.find()
+    Question.find().sort({ updatedAt: -1 })
         .then(questions => res.json(questions))
         .catch(err => res.status(400).json({ error : err}))
 })
@@ -31,9 +32,36 @@ router.route('/add').post((req, res) => {
     const dislikeCount = 0
     const answerCount = 0
     
+    //notification for question title
+    const readStatus = false
+    const questionTitleArray = questionTitle.split('@')
+    if(questionTitleArray.length > 1){
+        var userTaggedArray = questionTitleArray[1].split(' ')
+        var usernameTagged = userTaggedArray[0]
+        var newNotification = new Notification({username, usernameTagged,questionTitle,readStatus})
+
+        newNotification.save()
+            .then(() => console.log(usernameTagged) )
+            .catch(err => res.status(400).json({ error : err}))
+    }
+
+    //notification for question body
+    const questionBodyArray = questionBody.split('@')
+    if(questionBodyArray.length > 1){
+        userTaggedArray = questionBodyArray[1].split(' ') 
+        usernameTagged = userTaggedArray[0]
+        newNotification = new Notification({username, usernameTagged,questionTitle,readStatus})
+
+        newNotification.save()
+            .then(() => console.log(usernameTagged) )
+            .catch(err => res.status(400).json({ error : err}))
+    }
+
+    //add the  question
     const newQuestion = new Question({username, firstName, lastName, questionTitle, questionBody,
         solvedStatus, starCount, likeCount,dislikeCount, answerCount})
-
+       
+    
     User.find({username : req.username})
     .then((userArray) => {
         userArray.forEach(user => {

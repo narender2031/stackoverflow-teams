@@ -5,7 +5,7 @@ let User = require('../models/userModel')
 
 //GET all the answers posted by everyone
 router.route('/').get((req, res) => {
-    Answer.find()
+    Answer.find().sort({ likeCount : -1 })
         .then(answers => res.json(answers))
         .catch(err => res.status(400).json({ error : err}))
 })

@@ -8,12 +8,24 @@ import {postAnswer} from '../redux/actions/dataActions'
 
 const styles = (theme) => ({
     ...theme.spread,
+    postAnswer : {
+        backgroundColor : '#c2c2c7',
+        borderRadius : '3px',
+        width: theme.spacing(113),
+    },
+    button : {
+        fontFamily: 'Bebas Neue',
+        fontSize : '20px',
+        marginTop : '10px',
+        marginBottom : '5px',
+        color : 'white'
+    },
 })
 
 export class PostAnswer extends Component {
 
     state = {
-        answerBody : ''
+        answerBody : 'Post an answer'
     }
 
     handleChange = (event) => {
@@ -22,6 +34,12 @@ export class PostAnswer extends Component {
         })
     }
 
+    handleClearText = () => {
+        this.setState({
+            answerBody : ''
+        })
+    }
+    
     handleSubmit = () => {
         let answerDetails = {
             answerBody : this.state.answerBody,
@@ -39,16 +57,17 @@ export class PostAnswer extends Component {
                 <TextField
                 id="answerBody"
                 name="answerBody"
-                label="Add an answer"
                 multiline
                 rows={4}
                 defaultValue="Add an answer"
                 variant="outlined"
                 value={this.state.answerBody}
                 onChange={this.handleChange}
+                onClick={this.handleClearText}
+                className={classes.postAnswer}
                 />
-
-                <Button type="submit" variant="contained" color="primary" className={classes.button} onClick={this.handleSubmit}>
+                <br/>
+                <Button type="submit" variant="contained" color="secondary" className={classes.button} onClick={this.handleSubmit}>
                     Submit
                 </Button>
             </form>

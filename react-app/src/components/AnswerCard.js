@@ -35,11 +35,6 @@ const styles = (theme) => ({
       width: theme.spacing(4),
       height: theme.spacing(4),
     },
-    arrow : {
-      width: theme.spacing(4.2),
-      fontSize : '20px',
-      color : '#ff5436'
-    },
     username : {
       fontSize : '16px',
       fontWeight : '500',
@@ -52,42 +47,15 @@ const styles = (theme) => ({
       color : '#8d8c8c',
       fontFamily : 'Hind'
     },
-    qtitle : {
-      fontSize : '19px',
-      color : '#ffbfb1',
-      fontFamily : 'Hind',
-      textTransform : 'capitalize',
-      "&:hover": {
-        textDecoration : 'none'
-      },
-    },
-    qbody : {
+    abody : {
       fontSize : '15px',
       color : 'white',
       fontFamily : 'Hind',
       textTransform : 'capitalize',
     },
-    answerCount : {
-      color : '#8d8c8c',
-      "&:hover": {
-        textDecoration : 'none'
-      },
-    },
-    likes : {
-      fontSize : '15px',
-      color : '#ececec',
-      fontFamily : 'Poppins',
-    },
-    chip : {
-      fontFamily : 'Poppins ',
-      backgroundColor : '#949494'
-    },
-    resolved : {
-      color : '#88dc7b'
-    }
 })
 
-export class QuestionCard extends Component {
+export class AnswerCard extends Component {
 
   state = {
     link : ''
@@ -102,17 +70,9 @@ export class QuestionCard extends Component {
     })
   }    
 
-  handleLikeQuestion = () => {
-    this.props.likeQuestion(this.props.question._id)
-  } 
-
-  handleDislikeQuestion = () => {
-    this.props.dislikeQuestion(this.props.question._id)
-  } 
-
   render() {
     dayjs.extend(relativeTime)
-    const { classes, question : { _id, firstName, lastName,username,questionTitle, questionBody,solvedStatus, likeCount, dislikeCount,answerCount, updatedAt}} = this.props
+    const { classes, answer : { _id, firstName, lastName,username,answerBody,updatedAt }} = this.props
     const fn = firstName ? firstName.toString().charAt(0) : firstName
     const ln = lastName ? lastName.toString().charAt(0) : lastName
     return (
@@ -123,21 +83,6 @@ export class QuestionCard extends Component {
               <Grid item sm>
                 <ButtonBase >
                   <Avatar className={classes.avatar}>{fn}{ln}</Avatar>
-                </ButtonBase>
-              </Grid>
-              <Grid item sm>
-                <ButtonBase onClick={this.handleLikeQuestion} className={classes.arrow}>
-                  <ArrowDropUpIcon className={classes.arrow}/>
-                </ButtonBase>
-              </Grid>
-              <Grid item sm>
-                  <Typography className={classes.likes}>
-                    {likeCount - dislikeCount}
-                  </Typography>
-              </Grid>
-              <Grid item sm>
-                <ButtonBase onClick={this.handleDislikeQuestion} className={classes.arrow}>
-                  <ArrowDropDownIcon className={classes.arrow}/>
                 </ButtonBase>
               </Grid>
             </Grid>
@@ -153,32 +98,16 @@ export class QuestionCard extends Component {
                   <Typography className={classes.posted} >
                     <ScheduleIcon style={{fontSize : '13px'}}/> {dayjs(updatedAt).fromNow()}
                   </Typography>
-                  <Typography variant="body2" gutterBottom className={classes.qtitle}>
-                    <MuiLink component ={Link} to ={ `/questions/${_id}`} className={classes.qtitle}>
-                      {questionTitle}
-                    </MuiLink>
-                  </Typography>
-                  <Typography variant="body2" color="textSecondary" className={classes.qbody}>
-                    {questionBody}
-                  </Typography>
-                </Grid>
-                <Grid item>
-                  <Typography variant="body2" style={{ cursor: 'pointer' }}>
-                    <MuiLink component ={Link} to ={ `/questions/${_id}`} className={classes.answerCount}> 
-                      {answerCount === 0 ? 'No answers yet!': answerCount === 1 ? answerCount +' answer' : answerCount +' answers'} 
-                    </MuiLink>
+                  <Typography variant="body2" color="textSecondary" className={classes.abody}>
+                    {answerBody}
                   </Typography>
                 </Grid>
               </Grid>
+
               <Grid item>
-                <ButtonBase>
-                  {this.props.user.user.username === username & this.state.link !== "home" ? <DeleteQuestion questionId = {_id}/> : <Fragment></Fragment>}
-                </ButtonBase>
-              </Grid>
-              <Grid item>
-                <Typography variant="subtitle1">
+                {/* <Typography variant="subtitle1">
                   {solvedStatus ? <CheckCircleIcon className={classes.resolved}/> : <Chip label="Unresolved" className={classes.chip}/>}
-                </Typography>
+                </Typography> */}
               </Grid>
             </Grid>
           </Grid>
@@ -192,4 +121,4 @@ const mapStateToProps = (state) => ({
   user : state.user
 })
 
-export default connect(mapStateToProps , {likeQuestion, dislikeQuestion})(withStyles(styles)(QuestionCard))
+export default connect(mapStateToProps , {likeQuestion, dislikeQuestion})(withStyles(styles)(AnswerCard))

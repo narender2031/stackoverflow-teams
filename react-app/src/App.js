@@ -24,6 +24,7 @@ import home from './pages/home'
 import welcome from './pages/welcome'
 import question from './pages/question'
 import user from './pages/user'
+import allUsers from './pages/allUsers'
 import leaderboard from './pages/leaderboard'
 
 //component
@@ -63,6 +64,7 @@ class App extends Component {
                 <Route exact path="/signup" component={signup} />
                 <Route exact path="/questions/:questionId" component={question} />
                 <Route exact path="/users/:username" component={user} />
+                <Route exact path="/allUsers/" component={allUsers} />
                 <Route exact path="/leaderboard" component={leaderboard} />
               </Switch>
             </div>
