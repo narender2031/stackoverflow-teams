@@ -46,8 +46,6 @@ export class PostAnswer extends Component {
             questionId : this.props.questionId
         }
         this.props.postAnswer(answerDetails)
-
-        console.log(this.state.answerBody)
     }
 
     render() {

@@ -71,7 +71,7 @@ export class UserCard extends Component {
                 <Grid item xs>
                   <Typography  variant="subtitle1" >
                     <MuiLink component ={Link} to ={ `/users/${username}`} className={classes.username} >
-                      {firstName} {lastName} {title ? ({title}) : ''}
+                      {username} 
                     </MuiLink>
                   </Typography>
                   <Typography variant="body2" gutterBottom className={classes.qtitle}>

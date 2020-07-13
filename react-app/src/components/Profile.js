@@ -102,7 +102,7 @@ class Profile extends Component {
                     @{username}
                 </div>
                 
-                {bio !== '' ?
+                {bio    ?
                 <div className={classes.bioDiv} >
                     <FormatQuoteIcon style={{fontSize : '18px', color : '#f0f4f4',  marginRight: '10px'}}/> {bio}
                 </div>: ''}

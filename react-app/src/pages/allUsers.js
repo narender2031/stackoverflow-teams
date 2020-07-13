@@ -44,11 +44,9 @@ class home extends Component {
     state = {
         link : ''
     }
+
     componentDidMount(){
-        const {allUsers} = this.props.user
-        //get the user data and todo items of authenticated user
-        if(allUsers)
-            this.props.getAllUsers()
+        this.props.getAllUsers()
 
         var main = window.location.origin.toString() + "/"
         var full = window.location.href.toString()
@@ -59,9 +57,9 @@ class home extends Component {
 
     }
     
-    showUserCard(){ 
+    showUserCard = () =>{ 
         const {allUsers} = this.props.user
-        
+
         return allUsers.map( user => <UserCard key={user._id} user={user} />)
     }
     
@@ -108,7 +106,7 @@ class home extends Component {
                         Browse all users
                     </Grid>
                     <Grid item sm={10}>                        
-                        {this.showUserCard()}
+                        {this.showUserCard}
                     </Grid>
                 </Grid>
             </Grid>
