@@ -11,8 +11,11 @@ import NotificationsIcon from '@material-ui/icons/Notifications'
 import Avatar from '@material-ui/core/Avatar'
 import HouseIcon from '@material-ui/icons/House'
 import RecentActorsIcon from '@material-ui/icons/RecentActors'
+import ExitToAppIcon from '@material-ui/icons/ExitToApp'
+
 import {connect} from 'react-redux'
 import {getNotifications} from '../redux/actions/uiActions'
+import {logoutUser} from '../redux/actions/userActions'
 
 const styles = (theme) => ({
     ...theme.spread,
@@ -66,7 +69,9 @@ class NavigationBar extends Component {
             open : !this.state.open
         })
     }
-
+    handleLogout = () => {
+        this.props.logoutUser()
+    } 
     componentDidMount(){
         this.props.getNotifications()
     }
@@ -107,6 +112,9 @@ class NavigationBar extends Component {
                                 <Button className={classes.buttonAuth} color="secondary" component = {Link} to={`/users/${this.props.user.user.username}`}>
                                     <Avatar className={classes.avatar}>{fn}{ln}</Avatar>
                                 </Button>
+                                <Button className={classes.buttonAuth} color="secondary" onClick={this.handleLogout}>
+                                    <ExitToAppIcon/>
+                                </Button>
                             </Fragment>
                             ) : (
                             <Fragment>
@@ -128,5 +136,5 @@ const mapStateToProps = (state) => ({
     ui : state.ui,
 })
 
-export default  connect(mapStateToProps, {getNotifications})(withStyles(styles)(NavigationBar))
+export default  connect(mapStateToProps, {getNotifications, logoutUser})(withStyles(styles)(NavigationBar))
                         

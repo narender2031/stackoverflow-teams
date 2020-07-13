@@ -5,6 +5,7 @@ import Grid from '@material-ui/core/Grid'
 // import axios from 'axios'
 
 import Profile from '../components/Profile'
+import ProfileSummary from '../components/ProfileSummary'
 import {connect} from 'react-redux'
 import {getUserData} from '../redux/actions/userActions'
 
@@ -29,11 +30,11 @@ export class user extends Component {
 
         return (
             <Grid container spacing={5}>
-                <Grid item sm={3} style={{border : '1px solid white'}}>
+                <Grid item sm={3}>
                     <Profile/>
                 </Grid>
-                <Grid item sm={9} style={{border : '1px solid white'}}>
-                    timekine
+                <Grid item sm={9}>
+                    <ProfileSummary/>
                 </Grid>
             </Grid>
         )

@@ -1,11 +1,10 @@
 import {SET_AUTHENTICATED , LOADING_USER, SET_UNAUTHENTICATED, SET_AUTHENTICATED_USER, SET_OTHER_USER,
-    SET_ALL_USER} from '../types'
+    SET_ALL_USER, EDIT_USER_DETAILS} from '../types'
 import axios from 'axios'
 
 export const signupUser = (newUser, history) => (dispatch) => {
     axios.post('/users/signup', newUser)
         .then(res => {
-            console.log(res.data)
             dispatch({
                 type : SET_AUTHENTICATED
             })
@@ -22,9 +21,6 @@ export const loginUser = (newUser, history) => (dispatch) => {
     })
     axios.post('/users/login', newUser)
         .then(res => {
-
-            //get the token in return
-            console.log(res.data)
 
             //store the token on local machine, so if page refreshes.. user doesnt have to login again
             setAuthorizationHeader(res.data)
@@ -58,7 +54,6 @@ export const logoutUser = () => (dispatch) => {
 export const getAuthenticatedUserData = () => (dispatch) => {
     axios.get('/user/getAuthenticatedUserData/')
     .then(res => {
-        console.log(res.data)
         dispatch({
             type : SET_AUTHENTICATED_USER,
             payload : res.data
@@ -89,4 +84,16 @@ export const getAllUsers = () => (dispatch) => {
         })
     })
     .catch(err => console.log(err) )
+}
+
+
+//edit user details
+export const editUserDetails = (userDetails) => (dispatch) => {
+    axios.post('/user/editUserDetails' , userDetails)
+        .then(res => {
+            dispatch({
+                type : EDIT_USER_DETAILS,
+                payload : res.data
+            })
+        })
 }

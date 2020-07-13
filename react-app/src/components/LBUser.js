@@ -31,11 +31,14 @@ const styles = (theme) => ({
       color : 'white',
       fontFamily : 'Hind'
     },
+    lbPos : {
+    fontFamily : 'Hind'
+    }
 })
 
 export class LBUser extends Component {
     render() {
-        const { classes, user : { _id, firstName, lastName,username,bio, title}} = this.props
+        const { classes, user : { firstName, lastName,username,leaderboardPosition}} = this.props
         const fn = firstName ? firstName.toString().charAt(0) : firstName
         const ln = lastName ? lastName.toString().charAt(0) : lastName
         return (
@@ -55,16 +58,11 @@ export class LBUser extends Component {
                     <Grid item xs>
                     <Typography  variant="subtitle1" >
                         <MuiLink component ={Link} to ={ `/users/${username}`} className={classes.username} >
-                        {username} 
+                            {firstName} {lastName}
                         </MuiLink>
                     </Typography>
-                    <Typography variant="body2" gutterBottom className={classes.qtitle}>
-                        <MuiLink component ={Link} to ={ `/questions/${_id}`} className={classes.qtitle}>
-                        {bio}
-                        </MuiLink>
-                    </Typography>
-                    <Typography variant="body2" color="textSecondary" className={classes.qbody}>
-                        {title}
+                    <Typography variant="body2" gutterBottom className={classes.lbPos} color='secondary'>
+                        {leaderboardPosition}
                     </Typography>
                     </Grid>
                 </Grid>
@@ -74,11 +72,6 @@ export class LBUser extends Component {
         </Zoom>
         )
     }
-}
-
-// const mapStateToProps = (state) => ({
-//     user : state.user
-// })
-  
+} 
 
 export default (withStyles(styles)(LBUser))

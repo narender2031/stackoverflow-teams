@@ -6,7 +6,6 @@ import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
 import Zoom from '@material-ui/core/Zoom'
 import ButtonBase from '@material-ui/core/ButtonBase'
-import IconButton from '@material-ui/core/IconButton'
 import Avatar from '@material-ui/core/Avatar'
 import Chip from '@material-ui/core/Chip'
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown'
@@ -118,7 +117,7 @@ export class QuestionCard extends Component {
     return (
       <Zoom in={true} style={{ transitionDelay: '500ms' }}>   
         <Paper elevation={3} className={classes.paper}>
-          <Grid container xs={12} spacing={2}>
+          <Grid container spacing={2}>
             <Grid item sm={1} container direction="column" spacing={2} alignItems="center">
               <Grid item sm>
                 <ButtonBase >

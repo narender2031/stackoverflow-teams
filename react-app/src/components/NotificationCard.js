@@ -1,15 +1,11 @@
-import React, { Component, Fragment } from 'react'
+import React, { Component } from 'react'
 import withStyles from '@material-ui/core/styles/withStyles'
 import {Link } from 'react-router-dom'
-import Paper from '@material-ui/core/Paper'
+import Divider from '@material-ui/core/Divider'
+
 import Grid from '@material-ui/core/Grid'
-import Typography from '@material-ui/core/Typography'
 import Button from '@material-ui/core/Button'
-import ButtonBase from '@material-ui/core/ButtonBase'
-import Avatar from '@material-ui/core/Avatar'
-import MuiLink from '@material-ui/core/Link'
 import {connect} from 'react-redux'
-import {likeQuestion , dislikeQuestion} from '../redux/actions/dataActions'
 
 const styles = (theme) => ({
     ...theme.spread,
@@ -33,6 +29,9 @@ const styles = (theme) => ({
       color : 'white',
       fontFamily : 'Hind'
     },
+    side : {
+      textTransform : 'capitalize'
+    }
 })
 
 export class NotificationCard extends Component {
@@ -51,23 +50,39 @@ export class NotificationCard extends Component {
   }    
 
   render() {
-    const { classes, notification : { _id, username, usernameTagged, questionTitle}} = this.props
+    const { classes, notification : { username, questionTitle}} = this.props
+    const { questions} = this.props.data
 
+    let questionId = questions.map(question => {
+      if(question.questionTitle === this.props.notification.questionTitle)
+        return question._id
+      else
+        return null
+      })
+      
     return (
-          <Grid >
-            <Grid item xs={12} sm container>
-              <Button className ={classes.side} component = {Link} to={`/users/${username}`} style={{color :  'white'}}>
-                  {username} tagged you in a question "{questionTitle} "
-              </Button> 
-            </Grid>
-          </Grid>
+      <Grid >
+        <Grid item xs={12} sm container>
+          <Button className = {classes.side} component = {Link} to={`/users/${username}`} style={{color :  'white'}}>
+              @{username} 
+          </Button> 
+          <span style={{color : '#b8b8b8', marginTop : '6px'}}>
+          tagged you in a question
+          </span>
+          <Button className = {classes.side} component = {Link} to={`/questions/${questionId}`} style={{color :  'white'}}>
+              {questionTitle} 
+          </Button>
+          <Divider color='secondary'/>
+        </Grid>
+      </Grid>
     )
   }
 }
 
 const mapStateToProps = (state) => ({
   ui : state.ui,
-  user : state.user
+  user : state.user,
+  data : state.data
 })
 
-export default connect(mapStateToProps, {likeQuestion, dislikeQuestion})(withStyles(styles)(NotificationCard))
+export default connect(mapStateToProps,null)(withStyles(styles)(NotificationCard))

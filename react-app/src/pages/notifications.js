@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom'
 import Grid from '@material-ui/core/Grid'
 import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
-import ListItemText from '@material-ui/core/ListItemText'
 import Divider from '@material-ui/core/Divider'
 import Button from '@material-ui/core/Button'
 import PublicIcon from '@material-ui/icons/Public'
@@ -13,7 +12,8 @@ import PeopleIcon from '@material-ui/icons/People'
 
 import NotificationCard from '../components/NotificationCard'
 import {connect} from 'react-redux'
-import {getNotifications} from '../redux/actions/uiActions'
+import {getNotifications, markAllRead} from '../redux/actions/uiActions'
+import {getQuestions} from '../redux/actions/dataActions'
 
 const styles = (theme) => ({
     ...theme.spread,
@@ -37,7 +37,13 @@ const styles = (theme) => ({
     sideIcon : {
         fontSize : '15px',
         color : '#b8b8b8',
-    },  
+    }, 
+    postQ : {
+        fontSize : '13px',
+        color : '#ececec',
+        fontFamily : 'Poppins',
+        textTransform : 'capitalize'
+    } 
 })
 
 class home extends Component {
@@ -47,10 +53,10 @@ class home extends Component {
     }
 
     componentDidMount(){
-        const {notifications} = this.props.ui
-        if(notifications)
-            this.props.getNotifications()
 
+        this.props.getNotifications()
+        this.props.getQuestions()
+        
         var main = window.location.origin.toString() + "/"
         var full = window.location.href.toString()
         var link = full.split(main)[1]
@@ -65,6 +71,10 @@ class home extends Component {
         return notifications.map( notification => <NotificationCard key={notification._id} notification={notification} />)
     }
     
+    handleMarkAllRead = () => {
+        this.props.markAllRead()
+    }
+
     render() {
         const { classes } = this.props
 
@@ -104,8 +114,13 @@ class home extends Component {
                     </List>
                 </Grid>
                 <Grid container item sm={10}>
-                    <Grid item sm={10} className ={classes.allQ}>
+                <Grid item sm={8} className ={classes.allQ}>
                         All Notifications
+                    </Grid>
+                    <Grid item sm={2} >
+                        <Button className={classes.postQ} onClick={this.handleMarkAllRead} variant="contained" color="secondary">
+                            Mark all as read
+                        </Button>
                     </Grid>
                     <Grid item sm={10}>                        
                         {this.showNotifications()}
@@ -121,4 +136,4 @@ const mapStateToProps = (state) => ({
     user : state.user
 })
 
-export default  connect(mapStateToProps, {getNotifications})(withStyles(styles)(home))
+export default  connect(mapStateToProps, {getNotifications, markAllRead, getQuestions})(withStyles(styles)(home))

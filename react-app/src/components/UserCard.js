@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react'
+import React, { Component } from 'react'
 import withStyles from '@material-ui/core/styles/withStyles'
 import {Link } from 'react-router-dom'
 import Paper from '@material-ui/core/Paper'
@@ -71,7 +71,7 @@ export class UserCard extends Component {
                 <Grid item xs>
                   <Typography  variant="subtitle1" >
                     <MuiLink component ={Link} to ={ `/users/${username}`} className={classes.username} >
-                      {username} 
+                      {firstName} {lastName} {title ? ({title}) : ''}
                     </MuiLink>
                   </Typography>
                   <Typography variant="body2" gutterBottom className={classes.qtitle}>

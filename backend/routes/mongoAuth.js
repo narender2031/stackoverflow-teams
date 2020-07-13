@@ -7,7 +7,6 @@ module.exports = (req, res, next ) => {
     if(req.headers.authorization){
         idToken = req.header("authorization")
     } else{
-        console.log("please login first")
         return res.status(403).json({error : "Un-Authorized"})
     }
 

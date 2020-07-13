@@ -71,7 +71,7 @@ router.route('/add').post((req, res) => {
                             .then((userArray) => {
                                 userArray.forEach(user => {
                                     user.leaderboardPosition = user.leaderboardPosition + 20
-                                
+                                    user.answerCount =  user.answerCount + 1
                                     user.save()
                                         .then(() => {
                                             newAnswer.save()

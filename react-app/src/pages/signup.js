@@ -76,7 +76,6 @@ class signup extends Component {
             // confirmPassword : this.state.confirmPassword,
             username : this.state.username
         }
-        console.log(newUser)
         this.props.signupUser(newUser , this.props.history)
     }
 

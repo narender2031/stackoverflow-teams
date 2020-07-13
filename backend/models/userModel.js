@@ -31,6 +31,9 @@ const userSchema = new Schema({
     title : {
         type :String,
     },
+    bio : {
+        type :String,
+    },
     location : {
         type :String,
     },

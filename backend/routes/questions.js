@@ -41,7 +41,7 @@ router.route('/add').post((req, res) => {
         var newNotification = new Notification({username, usernameTagged,questionTitle,readStatus})
 
         newNotification.save()
-            .then(() => console.log(usernameTagged) )
+            .then(() => {} )
             .catch(err => res.status(400).json({ error : err}))
     }
 
@@ -53,7 +53,7 @@ router.route('/add').post((req, res) => {
         newNotification = new Notification({username, usernameTagged,questionTitle,readStatus})
 
         newNotification.save()
-            .then(() => console.log(usernameTagged) )
+            .then(() => {} )
             .catch(err => res.status(400).json({ error : err}))
     }
 
@@ -66,10 +66,10 @@ router.route('/add').post((req, res) => {
     .then((userArray) => {
         userArray.forEach(user => {
             user.leaderboardPosition = user.leaderboardPosition + 10
-        
+            user.questionCount =  user.questionCount + 1
+
             user.save()
                 .then(() => {
-                    // console.log(user)
                     newQuestion.save()
                         .then(() => res.json(newQuestion) )
                         .catch(err => res.status(400).json({ error : err}))
@@ -99,7 +99,7 @@ router.route('/update/:questionId').post((req, res) => {
 //DELETE a question, if a question is delete , all answers for that questions also will be deleted
 router.route('/delete/:questionId').delete((req, res) => {
     Question.findByIdAndDelete(req.params.questionId)
-        .then(() => console.log('Question delete done'))
+        .then(() => {})
         .catch(err => res.status(400).json({ error : err}))
 
     Answer.deleteMany({questionId : req.params.questionId})
@@ -146,7 +146,7 @@ router.route('/like/:questionId').get((req, res) => {
                         likesArrayData.likeState = true
 
                         likesArrayData.save()
-                            .then(() => console.log(likesArrayData) )
+                            .then(() => {} )
                             .catch(err => res.status(400).json({ error : err}))
                             
                         Question.findById(questionId)
@@ -167,7 +167,7 @@ router.route('/like/:questionId').get((req, res) => {
                 const newLike = new Likes({userId, questionId, likeState})
 
                 newLike.save()
-                    .then(() => console.log(newLike) )
+                    .then(() => {} )
                     .catch(err => res.status(400).json({ error : err}))
 
                 Question.findById(questionId)
@@ -205,7 +205,7 @@ router.route('/dislike/:questionId').get((req, res) => {
                         likesArrayData.likeState = false
 
                         likesArrayData.save()
-                            .then(() => console.log(likesArrayData) )
+                            .then(() => {})
                             .catch(err => res.status(400).json({ error : err}))
                             
                         Question.findById(questionId)
@@ -226,7 +226,7 @@ router.route('/dislike/:questionId').get((req, res) => {
                 const newLike = new Likes({userId, questionId, likeState})
 
                 newLike.save()
-                    .then(() => console.log(newLike) )
+                    .then(() => {} )
                     .catch(err => res.status(400).json({ error : err}))
                 
                 Question.findById(questionId)

@@ -15,26 +15,9 @@ router.route('/:username').get((req, res) => {
 
 //get details of a single user, using their username 
 router.route('/').get((req, res) => {
-    User.find()
+    User.find().sort( {leaderboardPosition : -1})
         .then(userArray => {
             res.json(userArray)
-        })
-        .catch(err => res.status(400).json({ error : err}))
-})
-
-//UPDATE user details
-router.route('/update/:userId').post((req, res) => {
-    User.findById(req.params.userId)
-        .then((user) => {
-            user.firstName = req.body.firstName
-            user.lastName = req.body.lastName
-            user.bio = req.body.bio
-            user.title = req.body.title
-            user.location = req.body.location
-
-            user.save()
-                .then(() => res.json(user) )
-                .catch(err => res.status(400).json({ error : err}))
         })
         .catch(err => res.status(400).json({ error : err}))
 })

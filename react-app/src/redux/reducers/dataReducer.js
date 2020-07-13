@@ -14,6 +14,7 @@ export default function (state = initialState, action){
                 ...state,
                 questions : action.payload,
             }
+
         case LIKE_QUESTION : 
             let index = state.questions.findIndex(
                 question => question._id === action.payload._id)
@@ -21,6 +22,7 @@ export default function (state = initialState, action){
             return {
                 ...state,
             }
+
         case DISLIKE_QUESTION : 
         let ind = state.questions.findIndex(
             question => question._id === action.payload._id)
@@ -28,16 +30,19 @@ export default function (state = initialState, action){
             return {
                 ...state,
             }
+
         case SET_SPECIFIC_QUESTION : 
             return {
                 ...state,
                 specificQuestion : action.payload,
             }
+
         case SET_SPECIFIC_ANSWERS : 
             return {
                 ...state,
                 specificAnswers : action.payload,
             }
+
         case POST_ANSWER : 
             return {
                 ...state,
@@ -46,6 +51,7 @@ export default function (state = initialState, action){
                     ...state.specificAnswers
                 ]
             }
+
         case POST_QUESTION : 
             return {
                 ...state,
@@ -54,18 +60,21 @@ export default function (state = initialState, action){
                     ...state.questions
                 ]
             }
+
         case DELETE_QUESTION : 
-            return {
-                ...state,
-            }
+        return {
+            ...state,
+            questions : state.questions.filter((question) => question._id !== action.payload)
+        }
+
         case TOGGLE_CORRECT_STATUS : 
         let indx = state.specificAnswers.findIndex(
             answer => answer._id === action.payload)
-            console.log(indx)
         state.specificAnswers[indx].statusCorrect = !state.specificAnswers[indx].statusCorrect
             return {
                 ...state,
             }
+            
        default : 
            return {
                ...state

@@ -7,9 +7,11 @@ export const SET_UNAUTHENTICATED = 'SET_UNAUTHENTICATED'
 export const SET_SPECIFIC_QUESTION = 'SET_SPECIFIC_QUESTION' 
 export const SET_SPECIFIC_ANSWERS = 'SET_SPECIFIC_ANSWERS' 
 export const SET_ALL_USER = 'SET_ALL_USER' 
+export const EDIT_USER_DETAILS = 'EDIT_USER_DETAILS' 
 
 //ui reducer types
 export const SET_NOTIFICATIONS = 'SET_NOTIFICATIONS' 
+export const MARK_ALL_READ = 'MARK_ALL_READ' 
 
 //data reducer types
 export const SET_QUESTIONS = 'SET_QUESTIONS'
