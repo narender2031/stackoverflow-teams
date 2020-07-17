@@ -78,11 +78,12 @@ class NavigationBar extends Component {
 
     render() {
         const {classes} = this.props
-        const {authenticated , user : {firstName , lastName}} = this.props.user
+        const {authenticated , user } = this.props.user
         const {notifications} = this.props.ui
 
-        const fn = firstName ? firstName.toString().charAt(0) : firstName
-        const ln = lastName ? lastName.toString().charAt(0) : lastName
+        let unreadNotifications =  0
+        const fn = user !== null ? user.firstName !== undefined ? user.firstName.toString().charAt(0) : '' : ''
+        const ln = user !== null ? user.firstName !== undefined ? user.lastName.toString().charAt(0) : '' : ''
         return (
             <div className={classes.navBar}> 
                 <AppBar position="static" className={classes.appBar}>

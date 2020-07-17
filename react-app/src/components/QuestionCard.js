@@ -16,8 +16,13 @@ import relativeTime from 'dayjs/plugin/relativeTime'
 import MuiLink from '@material-ui/core/Link'
 import DeleteQuestion from './DeleteQuestion'
 import ScheduleIcon from '@material-ui/icons/Schedule'
+import InputBase from '@material-ui/core/InputBase'
+import CheckBoxIcon from '@material-ui/icons/CheckBox'
+import ClearIcon from '@material-ui/icons/Clear'
+import IconButton from '@material-ui/core/IconButton'
+
 import {connect} from 'react-redux'
-import {likeQuestion , dislikeQuestion} from '../redux/actions/dataActions'
+import {likeQuestion , dislikeQuestion, updateQuestionTitle, updateQuestionBody} from '../redux/actions/dataActions'
 
 const styles = (theme) => ({
     ...theme.spread,
@@ -43,34 +48,35 @@ const styles = (theme) => ({
       fontSize : '16px',
       fontWeight : '500',
       color : 'white',
-      fontFamily : 'Hind'
+      fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"'
     },
     posted : {
       fontSize : '11px',
       fontWeight : '500',
       color : '#8d8c8c',
-      fontFamily : 'Hind'
     },
     qtitle : {
-      fontSize : '19px',
+      fontSize : '16px',
       color : '#ffbfb1',
-      fontFamily : 'Hind',
-      textTransform : 'capitalize',
+      cursor : 'pointer',
       "&:hover": {
         textDecoration : 'none'
       },
+      fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"'
     },
     qbody : {
-      fontSize : '15px',
+      fontSize : '14px',
       color : 'white',
-      fontFamily : 'Hind',
-      textTransform : 'capitalize',
+      cursor : 'pointer',
+      fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"'
     },
     answerCount : {
       color : '#8d8c8c',
+      fontSize : '13px',
       "&:hover": {
         textDecoration : 'none'
       },
+      fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"'
     },
     likes : {
       fontSize : '15px',
@@ -79,17 +85,30 @@ const styles = (theme) => ({
     },
     chip : {
       fontFamily : 'Poppins ',
-      backgroundColor : '#949494'
+      backgroundColor : '#949494',
+      fontSize : '10.5px',
     },
     resolved : {
       color : '#88dc7b'
+    },
+    postQ : {
+      color : 'white',
+      fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"',
+      fontSize : '15px',
+      backgroundColor : '#424242'
+    },
+    check : {
     }
 })
 
 export class QuestionCard extends Component {
 
   state = {
-    link : ''
+    link : '',
+    editTitle : false,
+    editBody : false,
+    questionTitle : this.props.question.questionTitle,
+    questionBody : this.props.question.questionBody
   } 
 
   componentDidMount(){
@@ -108,6 +127,52 @@ export class QuestionCard extends Component {
   handleDislikeQuestion = () => {
     this.props.dislikeQuestion(this.props.question._id)
   } 
+
+  handleEditBody = () => {
+    this.setState({
+      editBody : true
+    })
+  }
+
+  handleEditTitle = () => {
+    this.setState({
+      editTitle : true
+    })
+  }
+
+  handleNoEditBody = () => {
+    this.setState({
+      editBody : false
+    })
+  }
+
+  handleNoEditTitle = () => {
+    this.setState({
+      editTitle : false
+    })
+  }
+
+  handlePostTitle = (event) => {
+    event.preventDefault()
+    const newQuestion = {questionTitle : this.state.questionTitle}
+    this.props.updateQuestionTitle(this.props.question._id, newQuestion)
+    
+    this.handleNoEditTitle()
+  }
+
+  handlePostBody = (event) => {
+    event.preventDefault()
+    const newQuestion = {questionBody : this.state.questionBody}
+    this.props.updateQuestionBody(this.props.question._id, newQuestion )
+
+    this.handleNoEditBody()
+  }
+
+  handleChange = (event) =>{
+    this.setState({
+      [event.target.name] : event.target.value 
+    })
+  }
 
   render() {
     dayjs.extend(relativeTime)
@@ -142,7 +207,7 @@ export class QuestionCard extends Component {
             </Grid>
 
             <Grid item xs={12} sm container>
-              <Grid item xs container direction="column" spacing={2}>
+              <Grid item xs={11} container direction="column" spacing={2}>
                 <Grid item xs>
                   <Typography  variant="subtitle1" >
                     <MuiLink component ={Link} to ={ `/users/${username}`} className={classes.username} >
@@ -152,14 +217,60 @@ export class QuestionCard extends Component {
                   <Typography className={classes.posted} >
                     <ScheduleIcon style={{fontSize : '13px'}}/> {dayjs(updatedAt).fromNow()}
                   </Typography>
-                  <Typography variant="body2" gutterBottom className={classes.qtitle}>
-                    <MuiLink component ={Link} to ={ `/questions/${_id}`} className={classes.qtitle}>
-                      {questionTitle}
-                    </MuiLink>
-                  </Typography>
-                  <Typography variant="body2" color="textSecondary" className={classes.qbody}>
-                    {questionBody}
-                  </Typography>
+
+                  {this.state.editTitle & username === this.props.user.user.username ? 
+                    <Fragment>
+                      <InputBase
+                        id="questionTitle"
+                        name="questionTitle"
+                        multiline
+                        rows={2}
+                        className={classes.postQ}
+                        value={this.state.questionTitle}
+                        inputProps={{ 'aria-label': 'Edit question' }}
+                        onChange={this.handleChange}
+                        fullWidth
+                      /> 
+                      <IconButton>
+                        <CheckBoxIcon color="secondary" onClick={this.handlePostTitle} />
+                      </IconButton>
+                      <IconButton>
+                        <ClearIcon color="secondary" onClick={this.handleNoEditTitle}/>
+                      </IconButton>
+
+                    </Fragment> :
+                    <Typography variant="body2" gutterBottom className={classes.qtitle} onDoubleClick={this.handleEditTitle}>
+                      <MuiLink component ={Link} to ={ `/questions/${_id}`} className={classes.qtitle}>
+                        {questionTitle}
+                      </MuiLink>
+                    </Typography>
+                  }
+
+                  {this.state.editBody & username === this.props.user.user.username ? 
+                    <Fragment>
+                      <InputBase
+                      id="questionBody"
+                      name="questionBody"
+                      multiline
+                      rows={4}
+                      className={classes.postQ}
+                      value={this.state.questionBody}
+                      inputProps={{ 'aria-label': 'Edit question' }}
+                      onChange={this.handleChange}
+                      fullWidth
+                      /> 
+                      <IconButton>
+                        <CheckBoxIcon color="secondary" onClick={this.handlePostBody} />
+                      </IconButton>
+                      <IconButton>
+                        <ClearIcon color="secondary" onClick={this.handleNoEditTitle}/>
+                      </IconButton>
+                    </Fragment> :
+                    <Typography variant="body2" color="textSecondary" className={classes.qbody} onDoubleClick={this.handleEditBody}>
+                      {questionBody}
+                    </Typography>
+                  } 
+
                 </Grid>
                 <Grid item>
                   <Typography variant="body2" style={{ cursor: 'pointer' }}>
@@ -169,15 +280,17 @@ export class QuestionCard extends Component {
                   </Typography>
                 </Grid>
               </Grid>
-              <Grid item>
-                <ButtonBase>
-                  {this.props.user.user.username === username & this.state.link !== "home" ? <DeleteQuestion questionId = {_id}/> : <Fragment></Fragment>}
-                </ButtonBase>
-              </Grid>
-              <Grid item>
-                <Typography variant="subtitle1">
-                  {solvedStatus ? <CheckCircleIcon className={classes.resolved}/> : <Chip label="Unresolved" className={classes.chip}/>}
-                </Typography>
+              <Grid item xs={1} container direction="column" alignItems='flex-end' justify='space-between' spacing={2} style={{paddingRight: '60px'}}>
+                <Grid item>
+                  <Typography variant="subtitle1" >
+                    {solvedStatus ? <CheckCircleIcon className={classes.resolved}/> : <Chip label="Unresolved" className={classes.chip}/>}
+                  </Typography>
+                </Grid>
+                <Grid item>
+                  <ButtonBase>
+                    {this.props.user.user.username !== undefined ? this.props.user.user.username === username & this.state.link !== "home" ? <DeleteQuestion questionId = {_id}/> : <Fragment></Fragment> : ''}
+                  </ButtonBase>
+                </Grid>
               </Grid>
             </Grid>
           </Grid>
@@ -191,4 +304,4 @@ const mapStateToProps = (state) => ({
   user : state.user
 })
 
-export default connect(mapStateToProps , {likeQuestion, dislikeQuestion})(withStyles(styles)(QuestionCard))
+export default connect(mapStateToProps , {likeQuestion, dislikeQuestion, updateQuestionTitle, updateQuestionBody})(withStyles(styles)(QuestionCard))

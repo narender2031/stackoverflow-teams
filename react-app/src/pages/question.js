@@ -1,15 +1,8 @@
 import React, { Component } from 'react'
 import withStyles from '@material-ui/core/styles/withStyles'
-import { Link } from 'react-router-dom'
 import Grid from '@material-ui/core/Grid'
-import List from '@material-ui/core/List'
-import ListItem from '@material-ui/core/ListItem'
-import Divider from '@material-ui/core/Divider'
-import Button from '@material-ui/core/Button'
-import PublicIcon from '@material-ui/icons/Public'
-import LocalOfferIcon from '@material-ui/icons/LocalOffer'
-import PeopleIcon from '@material-ui/icons/People'
 
+import Sidebar from '../components/Sidebar'
 import QuestionCard from '../components/QuestionCard'
 import AnswerCard from '../components/AnswerCard'
 import PostAnswer from '../components/PostAnswer'
@@ -55,6 +48,13 @@ const styles = (theme) => ({
       fontSize : '15px',
       color : '#b8b8b8',
   },  
+  qError : {
+    fontSize : '25px',
+    color : '#b8b8b8',
+    fontFamily : 'Poppins',
+    textTransform : 'capitalize',
+    paddingTop : '20px'
+  }
 })
 
 export class question extends Component {
@@ -78,51 +78,31 @@ export class question extends Component {
   }
 
   showQuestionCard(){ 
-    const {specificQuestion} = this.props.data
-
-    return <QuestionCard key={specificQuestion._id} question={specificQuestion} />
+    const { classes } = this.props
+    const { specificQuestion} = this.props.data
+    if (specificQuestion) 
+      return <QuestionCard key={specificQuestion._id} question={specificQuestion} />
+    else
+      return <div className={classes.qError}> This question doesn't exist</div>
   }
 
   showAnswersCard(){ 
     const {specificAnswers } = this.props.data
-
-    return specificAnswers.map( specificAnswer => <AnswerCard key={specificAnswer._id} answer={specificAnswer}/>)
+    if (specificAnswers.length === 0)
+      return <div></div>
+    else
+      return specificAnswers.map( specificAnswer => <AnswerCard key={specificAnswer._id} answer={specificAnswer}/>)
   }
 
   render() {
-    const {specificQuestion : {_id} } = this.props.data
+    const {specificQuestion } = this.props.data
     const { classes } = this.props
 
     return (
 
         <Grid container spacing={5}>
           <Grid item sm={2} className ={classes.sideBar}>
-              <List component="nav" className={classes.root} aria-label="mailbox folders">
-                  <ListItem button>
-                      <Button className ={classes.side} component = {Link} to="/home" 
-                      style={{color : this.state.link === "home" ? 'white' : '',
-                              borderLeft: this.state.link === "home" ? '5px solid #ff5436' : '',
-                              backgroundColor : this.state.link === "home" ? '#1c1c1c' : '',}}>
-                          <PublicIcon className ={classes.sideIcon} style={{color : this.state.link === "home" ? 'white' : ''}}/>
-                          &nbsp;Team Stack
-                      </Button>
-                  </ListItem>
-                  <Divider />
-                  <ListItem button divider>
-                      <Button className ={classes.side} component = {Link} to="/tags" 
-                      style={{color : this.state.link === "tags" ? 'white' : ''}}>
-                          <LocalOfferIcon className ={classes.sideIcon} style={{color : this.state.link === "tags" ? 'white' : ''}}/>
-                          &nbsp;Tags
-                      </Button>
-                  </ListItem>
-                  <ListItem button>
-                      <Button className ={classes.side} component = {Link} to="/allUsers" style={{color : this.state.link === "users" ? 'white' : ''}}>
-                          <PeopleIcon className ={classes.sideIcon} style={{color : this.state.link === "users" ? 'white' : ''}}/>
-                          &nbsp;Users
-                      </Button>
-                  </ListItem>
-                  <Divider  />
-              </List>
+            <Sidebar link ={this.state.link}/>
           </Grid>
           <Grid container item sm={10}>
               <Grid item sm={10}>                        
@@ -131,9 +111,11 @@ export class question extends Component {
               <Grid item sm={10}>                        
                   {this.showAnswersCard()}
               </Grid>
-              <Grid item sm={10} >         
-                <PostAnswer questionId={_id} />
+              {this.props.user.user.username !== specificQuestion.username ? 
+              <Grid item sm={10} >   
+                    <PostAnswer questionId={specificQuestion ? specificQuestion._id : ''} />                
               </Grid>
+              : ''}
           </Grid>
       </Grid>
     )
@@ -141,7 +123,8 @@ export class question extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  data : state.data
+  data : state.data,
+  user : state.user,
 })
 
 export default connect(mapStateToProps , { getSpecificQuestion, getSpecificAnswers})(withStyles(styles)(question))

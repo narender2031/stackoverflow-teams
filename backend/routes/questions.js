@@ -83,8 +83,21 @@ router.route('/add').post((req, res) => {
     
 })
 
-//UPDATE a question
-router.route('/update/:questionId').post((req, res) => {
+//UPDATE a question title
+router.route('/updateQuestionTitle/:questionId').post((req, res) => {
+    Question.findById(req.params.questionId)
+        .then((question) => {
+            question.questionTitle = req.body.questionTitle
+
+            question.save()
+                .then(() => res.json(question) )
+                .catch(err => res.status(400).json({ error : err}))
+        })
+        .catch(err => res.status(400).json({ error : err}))
+})
+
+//UPDATE a question body
+router.route('/updateQuestionBody/:questionId').post((req, res) => {
     Question.findById(req.params.questionId)
         .then((question) => {
             question.questionBody = req.body.questionBody

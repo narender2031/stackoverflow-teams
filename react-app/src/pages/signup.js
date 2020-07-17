@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 import Typography from '@material-ui/core/Typography'
 import Button from '@material-ui/core/Button'
 import Grid from '@material-ui/core/Grid'
-import TextField from '@material-ui/core/TextField'
+import InputBase from '@material-ui/core/InputBase'
 
 import {connect} from 'react-redux'
 import {signupUser} from '../redux/actions/userActions'
@@ -22,7 +22,7 @@ const styles = (theme) => ({
         textAlign : 'center'
     },
     formMain : {
-        backgroundColor : '#303030',
+        backgroundColor : '#424242',
     },
     button : {
         fontFamily: 'Bebas Neue',
@@ -32,17 +32,13 @@ const styles = (theme) => ({
         color : 'white'
     },
     textField : {
-        marginBottom : '10px',
-        // border: '1px solid white',
+        border: '1px solid white',
         borderRadius: '4px',
-        '&::focus' : {
-            backgroundColor : '#a3a3a8',
-            color: 'white',
-        },
-        '&::placeholder': {
-                //   textOverflow: 'ellipsis !important',
-            color: 'white'
-         }
+        color : 'white',
+        marginTop : '20px',
+        padding : '5px',
+        fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"',
+        fontSize : '15px',
     },
     root: {
           '&.Mui-focused fieldset': {
@@ -73,7 +69,6 @@ class signup extends Component {
             lastName : this.state.lastName,
             email : this.state.email,
             password : this.state.password,
-            // confirmPassword : this.state.confirmPassword,
             username : this.state.username
         }
         this.props.signupUser(newUser , this.props.history)
@@ -96,95 +91,77 @@ class signup extends Component {
                         Register for a new account
                     </Typography>
                     <form noValidate onSubmit ={this.handleSubmit } style={{paddingBottom: '10px'}}>
-                        <TextField 
+                        <InputBase 
                         id ="firstName" 
                         name="firstName" 
                         type="text" 
-                        label="First Name" 
                         variant="outlined"
+                        placeholder = "First Name"
                         className={classes.textField}
                         value={this.state.firstName} 
                         onChange= {this.handleChange} fullWidth
                         color ='secondary' 
-                        InputLabelProps={{
-                            style: {
-                              color: 'white'
-                            } }} />
+                        />
 
-                        <TextField 
+                        <InputBase 
                         id ="lastName" 
                         name="lastName" 
                         type="text" 
-                        label="Last Name" 
                         variant="outlined"
+                        placeholder = "Last Name"
                         className={classes.textField}
                         value={this.state.lastName} 
                         onChange= {this.handleChange} fullWidth 
                         color ='secondary'
-                        InputLabelProps={{
-                            style: {
-                              color: 'white'
-                            } }} />
+                        />
                         
-                        <TextField 
+                        <InputBase 
                         id ="email" 
                         name="email" 
                         type="email" 
-                        label="Email" 
                         className={classes.textField}
                         variant="outlined"
+                        placeholder = "Email"
                         value={this.state.email} 
                         onChange= {this.handleChange} fullWidth 
                         color ='secondary'
-                        InputLabelProps={{
-                            style: {
-                              color: 'white'
-                            } }} />
+                        />
 
-                        <TextField 
+                        <InputBase 
                         id ="username" 
                         name="username" 
                         type="text" 
-                        label="Username" 
+                        placeholder="Username" 
                         variant="outlined"
                         className={classes.textField}
                         value={this.state.username} 
                         onChange= {this.handleChange} fullWidth 
                         color ='secondary'
-                        InputLabelProps={{
-                            style: {
-                              color: 'white'
-                            } }} />
+                        />
 
-                        <TextField 
+                        <InputBase 
                         id ="password" 
                         name="password" 
                         type="password" 
-                        label="Password" 
+                        placeholder="Password" 
                         className={classes.textField}
                         variant="outlined"
                         value={this.state.password} 
                         onChange= {this.handleChange} fullWidth
                         color ='secondary' 
-                        InputLabelProps={{
-                            style: {
-                              color: 'white'
-                            } }} />
+                        />
 
-                        <TextField 
+                        <InputBase 
                         id ="confirmPassword" 
                         name="confirmPassword" 
                         type="password" 
-                        label="Confirm Password" 
+                        placeholder="Confirm Password" 
                         className={classes.textField}
                         variant="outlined"
                         value={this.state.confirmPassword} 
                         onChange= {this.handleChange} fullWidth 
                         color ='secondary'
-                        InputLabelProps={{
-                            style: {
-                              color: 'white'
-                            } }} />
+                        />
 
                         <Button type="submit" variant="contained" color="secondary" className={classes.button}>
                             Lets Go!

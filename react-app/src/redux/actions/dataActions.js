@@ -1,5 +1,6 @@
 import {SET_QUESTIONS, SET_ANSWERS, LIKE_QUESTION, DISLIKE_QUESTION,SET_SPECIFIC_QUESTION, SET_SPECIFIC_ANSWERS,
-     POST_ANSWER,POST_QUESTION, DELETE_QUESTION, TOGGLE_CORRECT_STATUS} from '../types'
+     POST_ANSWER,POST_QUESTION, DELETE_QUESTION,DELETE_ANSWER, TOGGLE_CORRECT_STATUS, UPDATE_QUESTION_TITLE,
+     UPDATE_QUESTION_BODY, UPDATE_ANSWER_BODY} from '../types'
 import axios from 'axios'
 
 //get all the questions posted 
@@ -94,6 +95,39 @@ export const postQuestion = (newQuestion) => (dispatch) => {
     })
 }
 
+//update question title
+export const updateQuestionTitle = (questionId, newQuestion) => (dispatch) => {
+    axios.post(`/questions/updateQuestionTitle/${questionId}` , newQuestion)
+    .then(res => {
+        dispatch({
+            type : UPDATE_QUESTION_TITLE,
+            payload : res.data
+        })
+    })
+}
+
+//update question body
+export const updateQuestionBody = (questionId , newQuestion) => (dispatch) => {
+    axios.post(`/questions/updateQuestionBody/${questionId}` , newQuestion)
+    .then(res => {
+        dispatch({
+            type : UPDATE_QUESTION_BODY,
+            payload : res.data
+        })
+    })
+}
+
+//update answer body
+export const updateAnswerBody = (answerId , newAnswer) => (dispatch) => {
+    axios.post(`/Answers/updateAnswerBody/${answerId}` , newAnswer)
+    .then(res => {
+        dispatch({
+            type : UPDATE_ANSWER_BODY,
+            payload : res.data
+        })
+    })
+}
+
 //delete specific question
 export const deleteQuestion = (questionId) => (dispatch) => {
     axios.delete(`/questions/delete/${questionId}`)
@@ -101,6 +135,17 @@ export const deleteQuestion = (questionId) => (dispatch) => {
         dispatch({
             type : DELETE_QUESTION,
             payload : questionId
+        })
+    })
+}
+
+//delete specific answer
+export const deleteAnswer = (answerId) => (dispatch) => {
+    axios.delete(`/answers/delete/${answerId}`)
+    .then(() => {
+        dispatch({
+            type : DELETE_ANSWER,
+            payload : answerId
         })
     })
 }

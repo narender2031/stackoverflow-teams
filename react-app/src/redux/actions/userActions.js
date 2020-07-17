@@ -27,6 +27,7 @@ export const loginUser = (newUser, history) => (dispatch) => {
             dispatch({
                 type : SET_AUTHENTICATED
             })
+            dispatch(getAuthenticatedUserData())
             history.push('/home')
         })
         .catch(err => {

@@ -1,5 +1,6 @@
 import {SET_QUESTIONS, LIKE_QUESTION, DISLIKE_QUESTION, SET_SPECIFIC_QUESTION, SET_SPECIFIC_ANSWERS,
-     POST_ANSWER, DELETE_QUESTION, POST_QUESTION, TOGGLE_CORRECT_STATUS} from '../types'
+     POST_ANSWER, DELETE_QUESTION,DELETE_ANSWER, POST_QUESTION, TOGGLE_CORRECT_STATUS, UPDATE_QUESTION_TITLE ,
+     UPDATE_QUESTION_BODY, UPDATE_ANSWER_BODY} from '../types'
 
 const initialState = {
    questions : [],
@@ -64,7 +65,14 @@ export default function (state = initialState, action){
         case DELETE_QUESTION : 
         return {
             ...state,
-            questions : state.questions.filter((question) => question._id !== action.payload)
+            questions : state.questions.filter((question) => question._id !== action.payload),
+            specificQuestion : null
+        }
+
+        case DELETE_ANSWER : 
+        return {
+            ...state,
+            specificAnswers : state.specificAnswers.filter((answer) => answer._id !== action.payload)
         }
 
         case TOGGLE_CORRECT_STATUS : 
@@ -74,7 +82,28 @@ export default function (state = initialState, action){
             return {
                 ...state,
             }
-            
+        
+        case UPDATE_QUESTION_TITLE : 
+        return {
+            ...state,
+            specificQuestion : action.payload
+        }
+
+        case UPDATE_QUESTION_BODY : 
+        return {
+            ...state,
+            specificQuestion : action.payload
+        }
+
+        case UPDATE_ANSWER_BODY : 
+        let indAns = state.specificAnswers.findIndex(
+            answer => answer._id === action.payload._id)
+        state.specificAnswers[indAns] = action.payload
+
+        return {
+            ...state,
+        }
+
        default : 
            return {
                ...state

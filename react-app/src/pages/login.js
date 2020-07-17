@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 import Typography from '@material-ui/core/Typography'
 import Button from '@material-ui/core/Button'
 import Grid from '@material-ui/core/Grid'
-import TextField from '@material-ui/core/TextField'
+import InputBase from '@material-ui/core/InputBase'
 
 import {connect} from 'react-redux'
 import {loginUser} from '../redux/actions/userActions'
@@ -22,7 +22,7 @@ const styles = (theme) => ({
         textAlign : 'center'
     },
     formMain : {
-        backgroundColor : '#303030',
+        backgroundColor : '#424242',
     },
     button : {
         fontFamily: 'Bebas Neue',
@@ -32,10 +32,14 @@ const styles = (theme) => ({
         color : 'white'
     },
     textField : {
-        marginBottom : '10px',
-        // border: '1px solid white',
+        border: '1px solid white',
         borderRadius: '4px',
-    }
+        color : 'white',
+        marginTop : '20px',
+        padding : '5px',
+        fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"',
+        fontSize : '15px',
+    },
 })
 
 class login extends Component {
@@ -74,35 +78,29 @@ class login extends Component {
                     </Typography>
                     <form noValidate onSubmit ={this.handleSubmit } style={{paddingBottom: '10px'}}>
 
-                        <TextField 
+                        <InputBase 
                         id ="username" 
                         name="username" 
                         type="test" 
-                        label="Username" 
+                        placeholder="Username" 
                         className={classes.textField}
                         variant="outlined"
                         value={this.state.username} 
                         onChange= {this.handleChange} fullWidth 
                         color ='secondary'
-                        InputLabelProps={{
-                            style: {
-                              color: 'white'
-                            } }} />
+                        />
 
-                        <TextField 
+                        <InputBase 
                         id ="password" 
                         name="password" 
                         type="password" 
-                        label="Password" 
+                        placeholder="Password" 
                         className={classes.textField}
                         variant="outlined"
                         value={this.state.password} 
                         onChange= {this.handleChange} fullWidth 
                         color ='secondary'
-                        InputLabelProps={{
-                            style: {
-                              color: 'white'
-                            } }} />
+                        />
 
                         <Button type="submit" variant="contained" color="secondary" className={classes.button}>
                             Confirm

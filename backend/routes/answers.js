@@ -91,6 +91,19 @@ router.route('/add').post((req, res) => {
     
 })
 
+//UPDATE a answer body
+router.route('/updateAnswerBody/:answerId').post((req, res) => {
+    Answer.findById(req.params.answerId)
+        .then((answer) => {
+            answer.answerBody = req.body.answerBody
+
+            answer.save()
+                .then(() => res.json(answer) )
+                .catch(err => res.status(400).json({ error : err}))
+        })
+        .catch(err => res.status(400).json({ error : err}))
+})
+
 //DELETE an answer
 router.route('/delete/:answerId').delete((req, res) => {
     Answer.findByIdAndDelete(req.params.answerId)
